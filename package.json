@@ -1,7 +1,7 @@
 {
-    "name": "",
+    "name": "@SAFE-anwang/web3.js-safe4-plugin",
     "version": "0.0.1",
-    "description": "",
+    "description": "A Web3.js 4.x Plugin for Interacting With Safe4 Smart Contracts",
     "main": "lib/index.js",
     "types": "lib/index.d.ts",
     "scripts": {
@@ -19,20 +19,22 @@
     },
     "repository": {
         "type": "git",
-        "url": "git+https://github.com/ChainSafe/.git"
+        "url": "git+https://github.com/SAFE-anwang/web3.js-plugin-safe4.git"
     },
-    "author": "ChainSafe Systems",
+    "author": "lemengbin",
     "license": "Apache-2.0",
     "bugs": {
-        "url": "https://github.com/ChainSafe//issues"
+        "url": "https://github.com/SAFE-anwang/web3.js-plugin-safe4/issues"
     },
-    "homepage": "https://github.com/ChainSafe/#readme",
+    "homepage": "https://github.com/SAFE-anwang/web3.js-plugin-safe4/blob/master/README.md",
     "devDependencies": {
         "@babel/cli": "^7.2.3",
         "@babel/core": "^7.3.3",
         "@babel/preset-env": "^7.3.1",
         "@babel/preset-typescript": "^7.3.3",
         "@babel/register": "^7.0.0",
+        "@typechain/ethers-v5": "^11.1.1",
+        "@typechain/web3-v1": "^6.0.6",
         "@types/bn.js": "^4.11.5",
         "@types/chai": "^4.1.7",
         "@types/mocha": "^5.2.5",
@@ -52,8 +54,12 @@
         "mocha": "^6.1.4",
         "ts-loader": "^6.2.1",
         "ts-node": "^8.3.0",
-        "typescript": "^3.5.1",
+        "typescript": "^5.1.6",
+        "typechain": "^8.3.1",
         "webpack": "^4.41.2"
     },
-    "dependencies": {}
+    "dependencies": {
+        "web3": ">= 4.0.2 < 5"
+    },
+    "typechain": "typechain --target ethers-v5 --out-dir ./config/ethers-v5/abis/ './config/json/abis/*.json'"
 }
