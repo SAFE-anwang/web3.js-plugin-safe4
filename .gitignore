@@ -63,3 +63,9 @@ typings/
 lib
 
 .DS_Store
+
+.idea
+
+*.lock
+
+package-lock.json
