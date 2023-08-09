@@ -18,7 +18,7 @@ export class Safe4Plugin extends Web3PluginBase {
         this.propertyAddress = options?.propertyAddress ?? PropertyAddress;
     }
 
-    public async getPropertyValue(name: string) {
+    public async getPropertyValue() {
         const _contract: Contract<typeof this.propertyABI> = new Contract(this.propertyABI, this.propertyAddress);
         _contract.link(this);
         if(_contract.methods.getValue != undefined) {
