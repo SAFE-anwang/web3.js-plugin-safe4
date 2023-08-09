@@ -1,1 +1,6 @@
-*.d.ts
+lib
+dist
+jest.config.js
+setup.js
+webpack.config.js
+.eslintrc.js
