@@ -9,7 +9,7 @@
         "test:unit": "jest --config=./test/unit/jest.config.js",
         "test:coverage": "jest --config=./test/unit/jest.config.js --coverage=true --coverage-reporters=text",
         "test:all": "yarn build &&& yarn test",
-        "clean": "rm -rf lib && rm -rf dist",
+        "clean": "rimraf lib && rimraf dist",
         "lint": "eslint --ext .ts src/",
         "check-types": "tsc --noEmit",
         "prepublishOnly": "yarn run build",
