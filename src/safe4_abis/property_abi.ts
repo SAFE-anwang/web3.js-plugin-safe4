@@ -1,4 +1,4 @@
-export const PropertyABI = [
+export const PropertyAbi = [
   {
     anonymous: false,
     inputs: [
