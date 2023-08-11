@@ -1,38 +1,18 @@
-import { Address, Contract, ContractAbi, Web3PluginBase, Web3Context } from 'web3';
-import { PropertyAbi } from './safe4_abis/property_abi';
-import { PropertyAddress } from './safe4_address';
+import {Web3Context, Web3PluginBase} from 'web3';
+import {Property} from "./contracts/property";
 
 export class Safe4Plugin extends Web3PluginBase {
-    public pluginNamespace: string
-    public propertyAbi: ContractAbi
-    public propertyAddress: Address
-    public _contract: Contract<typeof PropertyAbi>
+    public pluginNamespace = "safe4";
+    public property: Property
 
-    public constructor(options?: {
-        pluginNamespace?: string;
-        propertyABI?: ContractAbi;
-        propertyAddress?: Address;
-    }) {
+    public constructor() {
         super();
-        this.pluginNamespace = options?.pluginNamespace ?? 'safe4';
-        this.propertyAbi = options?.propertyABI ?? PropertyAbi;
-        this.propertyAddress = options?.propertyAddress ?? PropertyAddress;
-        this._contract = new Contract(this.propertyAbi, this.propertyAddress)
+        this.property = new Property();
     }
 
     public link(parentContext: Web3Context) {
         super.link(parentContext);
-        this._contract.link(parentContext);
-    }
-
-    public async getPropertyValue(name: string) {
-        // eslint-disable-next-line eqeqeq
-        if(this._contract.methods.getValue != undefined) {
-            return this._contract.methods.getValue(name).call();
-        }
-        throw new Error(
-            'Unable to get property value, provided propertyABI is missing getValue method',
-        );
+        this.property.link(parentContext);
     }
 }
 
