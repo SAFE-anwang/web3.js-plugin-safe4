@@ -22,6 +22,7 @@
         "url": "git+https://github.com/SAFE-anwang/web3.js-plugin-safe4.git"
     },
     "author": "lemengbin",
+    "private": true,
     "license": "LGPL-3.0",
     "bugs": {
         "url": "https://github.com/SAFE-anwang/web3.js-plugin-safe4/issues"
