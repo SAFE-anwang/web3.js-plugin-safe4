@@ -1,5 +1,5 @@
 import {Web3Context, Contract} from "web3";
-import {PropertyAbi} from "../safe4_abis/property_abi";
+import {PropertyAbi} from "../safe4_abi";
 import {PropertyAddress} from "../safe4_address";
 
 export class Property {
