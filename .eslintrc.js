@@ -17,6 +17,7 @@ module.exports = {
     'plugin:import/typescript',
   ],
   rules: {
+    camelcase: 0,
     'deprecation/deprecation': 'error',
     'class-methods-use-this': ['error'],
     'no-unused-expressions': ['error'],
@@ -27,7 +28,7 @@ module.exports = {
     'no-use-before-define': ['error'],
     'no-shadow': 'off',
     '@typescript-eslint/no-shadow': ['error'],
-    'no-console': ['error', { allow: ['error', 'info', 'warn'] }],
+    'no-console': 'off',
     '@typescript-eslint/no-floating-promises': ['error'],
     '@typescript-eslint/prefer-for-of': ['error'],
     '@typescript-eslint/consistent-type-assertions': ['error'],
