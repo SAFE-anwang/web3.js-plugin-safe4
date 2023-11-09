@@ -24,7 +24,6 @@ export interface MasterNodeInfo {
     readonly creator: Address;
     readonly amount: number;
     readonly enode: string;
-    readonly ip: string;
     readonly description: string;
     readonly isOfficial: boolean;
     readonly stateInfo: MasterNodeStateInfo;

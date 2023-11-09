@@ -9,8 +9,8 @@ export interface ProposalInfo {
     readonly startPayTime: number;
     readonly endPayTime: number;
     readonly description: string;
-    readonly detail: string;
     readonly voters: Address[];
+    readonly voteResults: number[];
     readonly state: number;
     readonly createHeight: number;
     readonly updateHeight: number;

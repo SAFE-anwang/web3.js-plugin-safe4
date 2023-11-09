@@ -10,10 +10,15 @@ export interface AccountRecord {
 }
 
 export interface RecordUseInfo {
-    readonly specialAddr: Address;
+    readonly frozenAddr: Address;
     readonly freezeHeight: number;
     readonly unfreezeHeight: number;
     readonly voteAddr: Address;
     readonly voteHeight: number;
     readonly releaseHeight: number;
+}
+
+export interface AccountAmountInfo {
+    readonly amount: number;
+    readonly ids: number[];
 }
