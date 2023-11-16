@@ -13,7 +13,7 @@ This is a [web3.js](https://github.com/web3/web3.js) `4.x` plugin for interactin
 ## Installation
 
 ```bash
-yarn add @safe-anwang/web3.js-safe4-plugin
+yarn add @safe-anwang/web3.js-plugin-safe4
 ```
 
 ## Using this plugin
@@ -38,10 +38,10 @@ To verify you have the correct `web3` version installed, after adding the packag
 
 ### Registering the Plugin with a web3.js Instance
 
-After importing `Safe4Plugin` from `@safe-anwang/web3.js-safe4-plugin` and `Web3` from `web3`, register an instance of `Safe4Plugin` with an instance of `Web3` like so:
+After importing `Safe4Plugin` from `@safe-anwang/web3.js-plugin-safe4` and `Web3` from `web3`, register an instance of `Safe4Plugin` with an instance of `Web3` like so:
 
 ```typescript
-import { Safe4Plugin } from "@safe-anwang/web3.js-safe4-plugin";
+import { Safe4Plugin } from "@safe-anwang/web3.js-plugin-safe4";
 import { Web3 } from "web3";
 
 const web3 = new Web3("YOUR_PROVIDER_URL");
@@ -56,13 +56,13 @@ More information about registering web3.js plugins can be found [here](https://d
 
 #### System Property Value
 
-#### `getPrice`
+#### `getValue`
 
 ```typescript
 async getValue(name: string)
 ```
 
-The `getPrice` method, it's parameter is property name.
+The `getValue` method, it's parameter is property name.
 
 ```typescript
 import { Web3 } from "web3";
@@ -73,7 +73,7 @@ const safe4Plugin = new Safe4Plugin();
 
 web3.registerPlugin(safe4Plugin);
 
-web3.chainlink.getPrice("block_space").then(console.log); // get value of property: block_space = 30
+web3.safe4.sysproperty.getValue("block_space").then(console.log); // get value of property: block_space = 30
 ```
 
 ## Found an issue or have a question or suggestion
