@@ -1,6 +1,6 @@
 {
-  "name": "@safe-anwang/web3.js-safe4-plugin",
-  "version": "0.0.1",
+  "name": "@safe-anwang/web3.js-plugin-safe4",
+  "version": "0.1.1",
   "description": "A Web3.js 4.x Plugin for Interacting With Safe4 Smart Contracts",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
@@ -24,7 +24,6 @@
     "url": "git+https://github.com/SAFE-anwang/web3.js-plugin-safe4.git"
   },
   "author": "lemengbin",
-  "private": true,
   "license": "LGPL-3.0",
   "bugs": {
     "url": "https://github.com/SAFE-anwang/web3.js-plugin-safe4/issues"
