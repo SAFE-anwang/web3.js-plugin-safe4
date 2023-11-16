@@ -1,9 +1,13 @@
 {
   "name": "@safe-anwang/web3.js-plugin-safe4",
-  "version": "0.1.1",
+  "version": "0.1.1-dev-20231114",
   "description": "A Web3.js 4.x Plugin for Interacting With Safe4 Smart Contracts",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
+  "files": [
+    "lib/**/*",
+    "dist/**/*"
+],
   "scripts": {
     "test": "yarn run test:unit",
     "test:unit": "jest --config=./test/unit/jest.config.js",
@@ -16,8 +20,7 @@
     "check-types": "tsc --noEmit",
     "prepublishOnly": "yarn run build",
     "prebuild": "yarn run clean",
-    "build": "yarn run build:lib",
-    "build:lib": "babel src -x .ts -d lib --source-maps"
+    "build": "tsc --build"
   },
   "repository": {
     "type": "git",
