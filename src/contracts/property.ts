@@ -14,8 +14,8 @@ export class Property {
         this._contract.link(parentContext);
     }
 
-    public async add(name: string, value: number, description: string, fromAddr: Address) {
-        if(this._contract.methods.add === undefined) {
+    public async add(fromAddr: Address, name: string, value: number, description: string) {
+        if (this._contract.methods.add === undefined) {
             throw new Error("provided PropertyABI is missing add method");
         }
         try {
@@ -27,8 +27,8 @@ export class Property {
         }
     }
 
-    public async applyUpdate(name: string, value: number, reason: string, fromAddr: Address) {
-        if(this._contract.methods.applyUpdate === undefined) {
+    public async applyUpdate(fromAddr: Address, name: string, value: number, reason: string) {
+        if (this._contract.methods.applyUpdate === undefined) {
             throw new Error("provided PropertyABI is missing applyUpdate method");
         }
         try {
@@ -40,8 +40,8 @@ export class Property {
         }
     }
 
-    public async vote4Update(name: string, voteResult: number, fromAddr: Address) {
-        if(this._contract.methods.vote4Update === undefined) {
+    public async vote4Update(fromAddr: Address, name: string, voteResult: number) {
+        if (this._contract.methods.vote4Update === undefined) {
             throw new Error("provided PropertyABI is missing vote4Update method");
         }
         try {
@@ -54,37 +54,51 @@ export class Property {
     }
 
     public async getInfo(name: string): Promise<PropertyInfo> {
-        if(this._contract.methods.getInfo === undefined) {
+        if (this._contract.methods.getInfo === undefined) {
             throw new Error("provided PropertyABI is missing getInfo method");
         }
         return this._contract.methods.getInfo(name).call();
     }
 
     public async getUnconfirmedInfo(name: string): Promise<UnconfirmedPropertyInfo> {
-        if(this._contract.methods.getUnconfirmedInfo === undefined) {
+        if (this._contract.methods.getUnconfirmedInfo === undefined) {
             throw new Error("provided PropertyABI is missing getUnconfirmedInfo method");
         }
         return this._contract.methods.getUnconfirmedInfo(name).call();
     }
 
     public async getValue(name: string): Promise<number> {
-        if(this._contract.methods.getValue === undefined) {
+        if (this._contract.methods.getValue === undefined) {
             throw new Error('provided propertyABI is missing getValue method');
         }
         return this._contract.methods.getValue(name).call();
     }
 
-    public async getAllConfirmed(): Promise<PropertyInfo[]> {
-        if(this._contract.methods.getAllConfirmed === undefined) {
-            throw new Error("provided PropertyABI is missing getAllConfirmed method");
+    public async getAll(): Promise<PropertyInfo[]> {
+        if (this._contract.methods.getAll === undefined) {
+            throw new Error("provided PropertyABI is missing getAll method");
         }
-        return this._contract.methods.getAllConfirmed().call();
+        return this._contract.methods.getAll().call();
     }
 
-    public async getAllUnConfirmed(): Promise<UnconfirmedPropertyInfo[]> {
-        if(this._contract.methods.getAllUnConfirmed === undefined) {
-            throw new Error("provided PropertyABI is missing getAllUnConfirmed method");
+    public async getAllUnconfirmed(): Promise<UnconfirmedPropertyInfo[]> {
+        if (this._contract.methods.getAllUnconfirmed === undefined) {
+            throw new Error("provided PropertyABI is missing getAllUnconfirmed method");
         }
-        return this._contract.methods.getAllUnConfirmed().call();
+        return this._contract.methods.getAllUnconfirmed().call();
+    }
+
+    public async exist(name: string): Promise<boolean> {
+        if (this._contract.methods.exist === undefined) {
+            throw new Error('provided propertyABI is missing exist method');
+        }
+        return this._contract.methods.exist(name).call();
+    }
+
+    public async existUnconfirmed(name: string): Promise<boolean> {
+        if (this._contract.methods.existUnconfirmed === undefined) {
+            throw new Error('provided propertyABI is missing existUnconfirmed method');
+        }
+        return this._contract.methods.existUnconfirmed(name).call();
     }
 }

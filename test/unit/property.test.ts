@@ -13,21 +13,21 @@ describe('Safe4Plugin Property Tests', () => {
 
     test("add", async () => {
         await web3.eth.personal.unlockAccount(accounts[0], '123', 1000);
-        const result = await web3.safe4.property.add("test_name2", 2, "test name2", accounts[0]);
+        const result = await web3.safe4.property.add(accounts[0], "test_name2", 2, "test name2");
         console.log(result);
         await web3.eth.personal.lockAccount(accounts[0]);
     });
 
     test("applyUpdate", async () => {
         await web3.eth.personal.unlockAccount(accounts[3], '123', 10);
-        const result = await web3.safe4.property.applyUpdate("block_space", 10, "update block space", accounts[2]);
+        const result = await web3.safe4.property.applyUpdate(accounts[2], "block_space", 10, "update block space");
         console.log(result);
         await web3.eth.personal.lockAccount(accounts[3]);
     });
 
     test("vote4Update", async () => {
         await web3.eth.personal.unlockAccount(accounts[4], '123', 10);
-        const result = await web3.safe4.property.vote4Update("block_space", 1, accounts[3]);
+        const result = await web3.safe4.property.vote4Update(accounts[3], "block_space", 1);
         console.log(result);
         await web3.eth.personal.lockAccount(accounts[4]);
     });
@@ -42,19 +42,19 @@ describe('Safe4Plugin Property Tests', () => {
         console.log(result);
     });
 
-    test("getValue",  async () => {
+    test("getValue", async () => {
         const result = await web3.safe4.property.getValue("block_space");
         console.log(result);
         expect(Number(result)).toBe(30);
     });
 
-    test("getAllConfirmed", async () => {
-        const result = await web3.safe4.property.getAllConfirmed();
+    test("getAll", async () => {
+        const result = await web3.safe4.property.getAll();
         console.log(result);
     });
 
-    test("getAllUnConfirmed", async () => {
-        const result = await web3.safe4.property.getAllUnConfirmed();
+    test("getAllUnconfirmed", async () => {
+        const result = await web3.safe4.property.getAllUnconfirmed();
         console.log(result);
     });
 });
