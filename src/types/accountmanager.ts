@@ -1,24 +1,24 @@
 import {Address} from "web3";
 
 export interface AccountRecord {
-    readonly id: number;
+    readonly id: bigint;
     readonly addr: Address;
-    readonly amount: number;
-    readonly lockDay: number;
-    readonly startHeight: number;
-    readonly unlockHeight: number;
+    readonly amount: bigint;
+    readonly lockDay: bigint;
+    readonly startHeight: bigint;
+    readonly unlockHeight: bigint;
 }
 
 export interface RecordUseInfo {
     readonly frozenAddr: Address;
-    readonly freezeHeight: number;
-    readonly unfreezeHeight: number;
-    readonly voteAddr: Address;
-    readonly voteHeight: number;
-    readonly releaseHeight: number;
+    readonly freezeHeight: bigint;
+    readonly unfreezeHeight: bigint;
+    readonly votedAddr: Address;
+    readonly voteHeight: bigint;
+    readonly releaseHeight: bigint;
 }
 
 export interface AccountAmountInfo {
-    readonly amount: number;
-    readonly ids: number[];
+    amount: bigint;
+    ids: bigint[];
 }

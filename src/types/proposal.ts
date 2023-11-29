@@ -1,17 +1,17 @@
 import {Address} from "web3";
 
 export interface ProposalInfo {
-    readonly id: number;
+    readonly id: bigint;
     readonly creator: Address;
     readonly title: string;
-    readonly payAmount: number;
-    readonly payTimes: number;
-    readonly startPayTime: number;
-    readonly endPayTime: number;
+    readonly payAmount: bigint;
+    readonly payTimes: bigint;
+    readonly startPayTime: bigint;
+    readonly endPayTime: bigint;
     readonly description: string;
     readonly voters: Address[];
-    readonly voteResults: number[];
-    readonly state: number;
-    readonly createHeight: number;
-    readonly updateHeight: number;
+    readonly voteResults: bigint[];
+    readonly state: bigint;
+    readonly createHeight: bigint;
+    readonly updateHeight: bigint;
 }

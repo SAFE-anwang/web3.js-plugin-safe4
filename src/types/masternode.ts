@@ -1,35 +1,34 @@
 import {Address} from "web3";
 
 export interface MasterNodeMemberInfo {
-    readonly lockID: number;
+    readonly lockID: bigint;
     readonly addr: Address;
-    readonly amount: number;
-    readonly height: number;
+    readonly amount: bigint;
+    readonly height: bigint;
 }
 
 export interface MasterNodeIncentivePlan {
-    readonly creator: number;
-    readonly partner: number;
-    readonly voter: number;
+    readonly creator: bigint;
+    readonly partner: bigint;
+    readonly voter: bigint;
 }
 
 export interface MasterNodeStateInfo {
-    readonly state: number;
-    readonly height: number;
+    readonly state: bigint;
+    readonly height: bigint;
 }
 
 export interface MasterNodeInfo {
-    readonly id: number;
+    readonly id: bigint;
     readonly addr: Address;
     readonly creator: Address;
-    readonly amount: number;
     readonly enode: string;
     readonly description: string;
     readonly isOfficial: boolean;
     readonly stateInfo: MasterNodeStateInfo;
     readonly founders: MasterNodeMemberInfo[];
     readonly incentivePlan: MasterNodeIncentivePlan;
-    readonly lastRewardHeight: number;
-    readonly createHeight: number;
-    readonly updateHeight: number;
+    readonly lastRewardHeight: bigint;
+    readonly createHeight: bigint;
+    readonly updateHeight: bigint;
 }

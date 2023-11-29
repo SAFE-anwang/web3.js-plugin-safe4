@@ -1,36 +1,35 @@
 import {Address} from "web3";
 
 export interface SuperNodeMemberInfo {
-    readonly lockID: number;
+    readonly lockID: bigint;
     readonly addr: Address;
-    readonly amount: number;
-    readonly height: number;
+    readonly amount: bigint;
+    readonly height: bigint;
 }
 
 export interface SuperNodeIncentivePlan {
-    readonly creator: number;
-    readonly partner: number;
-    readonly voter: number;
+    readonly creator: bigint;
+    readonly partner: bigint;
+    readonly voter: bigint;
 }
 
 export interface SuperNodeStateInfo {
-    readonly state: number;
-    readonly height: number;
+    readonly state: bigint;
+    readonly height: bigint;
 }
 
 export interface SuperNodeVoteInfo {
-    readonly Voters: SuperNodeMemberInfo[];
-    readonly totalAmount: number;
-    readonly totalNum: number;
-    readonly height: number;
+    readonly voters: SuperNodeMemberInfo[];
+    readonly totalAmount: bigint;
+    readonly totalNum: bigint;
+    readonly height: bigint;
 }
 
 export interface SuperNodeInfo {
-    readonly id: number;
+    readonly id: bigint;
     readonly name: string;
     readonly addr: Address;
     readonly creator: Address;
-    readonly amount: number;
     readonly enode: string;
     readonly description: string;
     readonly isOfficial: boolean;
@@ -38,7 +37,7 @@ export interface SuperNodeInfo {
     readonly founders: SuperNodeMemberInfo[];
     readonly incentivePlan: SuperNodeIncentivePlan;
     readonly voteInfo: SuperNodeVoteInfo;
-    readonly lastRewardHeight: number;
-    readonly createHeight: number;
-    readonly updateHeight: number;
+    readonly lastRewardHeight: bigint;
+    readonly createHeight: bigint;
+    readonly updateHeight: bigint;
 }
