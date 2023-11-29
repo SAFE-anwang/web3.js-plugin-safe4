@@ -162,7 +162,7 @@ export class SuperNode {
         return this._storage_contract.methods.getOfficials().call();
     }
 
-    public async getNum(): Promise<number> {
+    public async getNum(): Promise<bigint> {
         if (this._storage_contract.methods.getNum === undefined) {
             throw new Error("provided SuperNodeStorageABI is missing getNum method");
         }

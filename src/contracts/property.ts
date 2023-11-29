@@ -67,7 +67,7 @@ export class Property {
         return this._contract.methods.getUnconfirmedInfo(name).call();
     }
 
-    public async getValue(name: string): Promise<number> {
+    public async getValue(name: string): Promise<bigint> {
         if (this._contract.methods.getValue === undefined) {
             throw new Error('provided propertyABI is missing getValue method');
         }

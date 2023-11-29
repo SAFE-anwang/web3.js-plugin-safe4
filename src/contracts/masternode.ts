@@ -150,7 +150,7 @@ export class MasterNode {
         return this._storage_contract.methods.getOfficials().call();
     }
 
-    public async getNum(): Promise<number> {
+    public async getNum(): Promise<bigint> {
         if (this._storage_contract.methods.getNum === undefined) {
             throw new Error("provided MasterNodeStorageABI is missing getNum method");
         }

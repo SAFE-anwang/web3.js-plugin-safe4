@@ -79,32 +79,44 @@ export class AccountManager {
         }
     }
 
+    // eslint-disable-next-line class-methods-use-this
+    private toAccountAmountInfo(obj: object): AccountAmountInfo {
+        const info: AccountAmountInfo = {
+            amount: BigInt(obj["0"].valueOf()),
+            ids: []
+        };
+        obj["1"].forEach((e: bigint) => {
+            info.ids.push(e);
+        })
+        return info;
+    }
+
     public async getTotalAmount(addr: Address): Promise<AccountAmountInfo> {
         if (this._contract.methods.getTotalAmount === undefined) {
             throw new Error("provided AccountManagerABI is missing getTotalAmount method");
         }
-        return this._contract.methods.getTotalAmount(addr).call();
+        return this.toAccountAmountInfo(await this._contract.methods.getTotalAmount(addr).call());
     }
 
     public async getAvailableAmount(addr: Address): Promise<AccountAmountInfo> {
         if (this._contract.methods.getAvailableAmount === undefined) {
             throw new Error("provided AccountManagerABI is missing getAvailableAmount method");
         }
-        return this._contract.methods.getAvailableAmount(addr).call();
+        return this.toAccountAmountInfo(await this._contract.methods.getAvailableAmount(addr).call());
     }
 
     public async getLockedAmount(addr: Address): Promise<AccountAmountInfo> {
         if (this._contract.methods.getLockedAmount === undefined) {
             throw new Error("provided AccountManagerABI is missing getLockedAmount method");
         }
-        return this._contract.methods.getLockedAmount(addr).call();
+        return this.toAccountAmountInfo(await this._contract.methods.getLockedAmount(addr).call());
     }
 
     public async getUsedAmount(addr: Address): Promise<AccountAmountInfo> {
         if (this._contract.methods.getUsedAmount === undefined) {
             throw new Error("provided AccountManagerABI is missing getUsedAmount method");
         }
-        return this._contract.methods.getUsedAmount(addr).call();
+        return this.toAccountAmountInfo(await this._contract.methods.getUsedAmount(addr).call());
     }
 
     public async getRecords(addr: Address): Promise<AccountRecord[]> {
