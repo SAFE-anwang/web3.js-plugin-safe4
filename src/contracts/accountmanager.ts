@@ -1,7 +1,7 @@
 import {Address, Contract, ContractExecutionError, Web3Context} from "web3";
 import {AccountManagerABI} from "../safe4_abi";
 import {AccountManagerContractAddr} from "../safe4_address";
-import {AccountRecord, RecordUseInfo} from "../types/accountmanager";
+import {AccountAmountInfo, AccountRecord, RecordUseInfo} from "../types/accountmanager";
 
 export class AccountManager {
     private readonly _contract: Contract<typeof AccountManagerABI>
@@ -14,7 +14,7 @@ export class AccountManager {
         this._contract.link(parentContext);
     }
 
-    public async deposit(fromAddr: Address, fromValue: string, to: Address, lockDay: number) {
+    public async deposit(fromAddr: Address, fromValue: string, to: Address, lockDay: number): Promise<string> {
         if (this._contract.methods.deposit === undefined) {
             throw new Error("provided AccountManagerABI is missing deposit method");
         }
@@ -27,7 +27,7 @@ export class AccountManager {
         }
     }
 
-    public async withdraw(fromAddr: Address) {
+    public async withdraw(fromAddr: Address): Promise<string> {
         if (this._contract.methods.withdraw === undefined) {
             throw new Error("provided AccountManagerABI is missing withdraw method");
         }
@@ -40,7 +40,7 @@ export class AccountManager {
         }
     }
 
-    public async withdrawByID(fromAddr: Address, ids: number[]) {
+    public async withdrawByID(fromAddr: Address, ids: number[]): Promise<string> {
         if (this._contract.methods.withdrawByID === undefined) {
             throw new Error("provided AccountManagerABI is missing withdrawByID method");
         }
@@ -53,7 +53,7 @@ export class AccountManager {
         }
     }
 
-    public async transfer(fromAddr: Address, to: Address, amount: number, lockDay: number) {
+    public async transfer(fromAddr: Address, to: Address, amount: number, lockDay: number): Promise<string> {
         if (this._contract.methods.transfer === undefined) {
             throw new Error("provided AccountManagerABI is missing transfer method");
         }
@@ -66,7 +66,7 @@ export class AccountManager {
         }
     }
 
-    public async addLockDay(fromAddr: Address, id: number, day: number) {
+    public async addLockDay(fromAddr: Address, id: number, day: number): Promise<string> {
         if (this._contract.methods.addLockDay === undefined) {
             throw new Error("provided AccountManagerABI is missing addLockDay method");
         }
@@ -79,28 +79,28 @@ export class AccountManager {
         }
     }
 
-    public async getTotalAmount(addr: Address) {
+    public async getTotalAmount(addr: Address): Promise<AccountAmountInfo> {
         if (this._contract.methods.getTotalAmount === undefined) {
             throw new Error("provided AccountManagerABI is missing getTotalAmount method");
         }
         return this._contract.methods.getTotalAmount(addr).call();
     }
 
-    public async getAvailableAmount(addr: Address) {
+    public async getAvailableAmount(addr: Address): Promise<AccountAmountInfo> {
         if (this._contract.methods.getAvailableAmount === undefined) {
             throw new Error("provided AccountManagerABI is missing getAvailableAmount method");
         }
         return this._contract.methods.getAvailableAmount(addr).call();
     }
 
-    public async getLockedAmount(addr: Address) {
+    public async getLockedAmount(addr: Address): Promise<AccountAmountInfo> {
         if (this._contract.methods.getLockedAmount === undefined) {
             throw new Error("provided AccountManagerABI is missing getLockedAmount method");
         }
         return this._contract.methods.getLockedAmount(addr).call();
     }
 
-    public async getUsedAmount(addr: Address) {
+    public async getUsedAmount(addr: Address): Promise<AccountAmountInfo> {
         if (this._contract.methods.getUsedAmount === undefined) {
             throw new Error("provided AccountManagerABI is missing getUsedAmount method");
         }

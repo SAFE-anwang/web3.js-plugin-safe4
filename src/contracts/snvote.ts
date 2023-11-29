@@ -14,7 +14,7 @@ export class SNVote {
         this._contract.link(parentContext);
     }
 
-    public async voteOrApproval(fromAddr: Address, isVote: boolean, dstAddr: Address, recordIDs: number[]) {
+    public async voteOrApproval(fromAddr: Address, isVote: boolean, dstAddr: Address, recordIDs: number[]): Promise<string> {
         if (this._contract.methods.voteOrApproval === undefined) {
             throw new Error("provided SNVoteABI is missing voteOrApproval method");
         }
@@ -27,7 +27,7 @@ export class SNVote {
         }
     }
 
-    public async removeVoteOrApproval(fromAddr: Address, recordIDs: number[]) {
+    public async removeVoteOrApproval(fromAddr: Address, recordIDs: number[]): Promise<string> {
         if (this._contract.methods.removeVoteOrApproval === undefined) {
             throw new Error("provided SNVoteABI is missing removeVoteOrApproval method");
         }
@@ -40,7 +40,7 @@ export class SNVote {
         }
     }
 
-    public async proxyVote(fromAddr: Address, snAddr: Address) {
+    public async proxyVote(fromAddr: Address, snAddr: Address): Promise<string> {
         if (this._contract.methods.proxyVote === undefined) {
             throw new Error("provided SNVoteABI is missing proxyVote method");
         }

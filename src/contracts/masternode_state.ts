@@ -14,7 +14,7 @@ export class MasterNodeState {
         this._contract.link(parentContext);
     }
 
-    public async upload(fromAddr: Address, ids: number[], states: number[]) {
+    public async upload(fromAddr: Address, ids: number[], states: number[]): Promise<string> {
         if (this._contract.methods.upload === undefined) {
             throw new Error("provided MasterNodeStateABI is missing upload method");
         }

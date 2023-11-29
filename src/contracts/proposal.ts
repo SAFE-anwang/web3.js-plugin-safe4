@@ -14,7 +14,7 @@ export class Proposal {
         this._contract.link(parentContext);
     }
 
-    public async create(fromAddr: Address, title: string, payAmount: number, payTimes: number, startPayTime: number, endPayTime: number, description: string) {
+    public async create(fromAddr: Address, title: string, payAmount: number, payTimes: number, startPayTime: number, endPayTime: number, description: string): Promise<string> {
         if (this._contract.methods.create === undefined) {
             throw new Error("provided ProposalABI is missing create method");
         }
@@ -27,7 +27,7 @@ export class Proposal {
         }
     }
 
-    public async vote(fromAddr: Address, id: number, voteResult: number) {
+    public async vote(fromAddr: Address, id: number, voteResult: number): Promise<string> {
         if (this._contract.methods.vote === undefined) {
             throw new Error("provided ProposalABI is missing vote method");
         }
@@ -40,7 +40,7 @@ export class Proposal {
         }
     }
 
-    public async changeTitle(fromAddr: Address, id: number, title: string) {
+    public async changeTitle(fromAddr: Address, id: number, title: string): Promise<string> {
         if (this._contract.methods.changeTitle === undefined) {
             throw new Error("provided ProposalABI is missing changeTitle method");
         }
@@ -53,7 +53,7 @@ export class Proposal {
         }
     }
 
-    public async changePayAmount(fromAddr: Address, id: number, payAmount: number) {
+    public async changePayAmount(fromAddr: Address, id: number, payAmount: number): Promise<string> {
         if (this._contract.methods.changePayAmount === undefined) {
             throw new Error("provided ProposalABI is missing changePayAmount method");
         }
@@ -66,7 +66,7 @@ export class Proposal {
         }
     }
 
-    public async changePayTimes(fromAddr: Address, id: number, payTimes: number) {
+    public async changePayTimes(fromAddr: Address, id: number, payTimes: number): Promise<string> {
         if (this._contract.methods.changePayTimes === undefined) {
             throw new Error("provided ProposalABI is missing changePayTimes method");
         }
@@ -79,7 +79,7 @@ export class Proposal {
         }
     }
 
-    public async changeStartPayTime(fromAddr: Address, id: number, startPayTime: number) {
+    public async changeStartPayTime(fromAddr: Address, id: number, startPayTime: number): Promise<string> {
         if (this._contract.methods.changeStartPayTime === undefined) {
             throw new Error("provided ProposalABI is missing changeStartPayTime method");
         }
@@ -92,7 +92,7 @@ export class Proposal {
         }
     }
 
-    public async changeEndPayTime(fromAddr: Address, id: number, endPayTime: number) {
+    public async changeEndPayTime(fromAddr: Address, id: number, endPayTime: number): Promise<string> {
         if (this._contract.methods.changeEndPayTime === undefined) {
             throw new Error("provided ProposalABI is missing changeEndPayTime method");
         }
@@ -105,7 +105,7 @@ export class Proposal {
         }
     }
 
-    public async changeDescription(fromAddr: Address, id: number, description: string) {
+    public async changeDescription(fromAddr: Address, id: number, description: string): Promise<string> {
         if (this._contract.methods.changeDescription === undefined) {
             throw new Error("provided ProposalABI is missing changeDescription method");
         }

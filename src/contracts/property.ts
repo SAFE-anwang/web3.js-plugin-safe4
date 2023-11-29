@@ -14,7 +14,7 @@ export class Property {
         this._contract.link(parentContext);
     }
 
-    public async add(fromAddr: Address, name: string, value: number, description: string) {
+    public async add(fromAddr: Address, name: string, value: number, description: string): Promise<string> {
         if (this._contract.methods.add === undefined) {
             throw new Error("provided PropertyABI is missing add method");
         }
@@ -27,7 +27,7 @@ export class Property {
         }
     }
 
-    public async applyUpdate(fromAddr: Address, name: string, value: number, reason: string) {
+    public async applyUpdate(fromAddr: Address, name: string, value: number, reason: string): Promise<string> {
         if (this._contract.methods.applyUpdate === undefined) {
             throw new Error("provided PropertyABI is missing applyUpdate method");
         }
@@ -40,7 +40,7 @@ export class Property {
         }
     }
 
-    public async vote4Update(fromAddr: Address, name: string, voteResult: number) {
+    public async vote4Update(fromAddr: Address, name: string, voteResult: number): Promise<string> {
         if (this._contract.methods.vote4Update === undefined) {
             throw new Error("provided PropertyABI is missing vote4Update method");
         }
