@@ -1,25 +1,28 @@
 import {Address, Contract, ContractExecutionError, Web3Context} from "web3";
-import {SuperNodeABI} from "../safe4_abi";
-import {SuperNodeContractAddr} from "../safe4_address";
+import {SuperNodeLogicABI, SuperNodeStorageABI} from "../safe4_abi";
+import {SuperNodeLogicContractAddr, SuperNodeStorageContractAddr} from "../safe4_address";
 import {SuperNodeInfo} from "../types/supernode";
 
 export class SuperNode {
-    private readonly _contract: Contract<typeof SuperNodeABI>
+    private readonly _storage_contract: Contract<typeof SuperNodeStorageABI>
+    private readonly _logic_contract: Contract<typeof SuperNodeLogicABI>
 
     public constructor() {
-        this._contract = new Contract(SuperNodeABI, SuperNodeContractAddr);
+        this._storage_contract = new Contract(SuperNodeStorageABI, SuperNodeStorageContractAddr);
+        this._logic_contract = new Contract(SuperNodeLogicABI, SuperNodeLogicContractAddr);
     }
 
     public link(parentContext: Web3Context) {
-        this._contract.link(parentContext);
+        this._storage_contract.link(parentContext);
+        this._logic_contract.link(parentContext);
     }
 
-    public async register(fromAddr: Address, fromValue: string, isUnion: boolean, addr: Address, lockDay: number, name: string, enode: string, description: string, creatorIncentive: number, partnerIncentive: number, voterIncentive: number) {
-        if (this._contract.methods.register === undefined) {
-            throw new Error("provided SuperNodeABI is missing register method");
+    public async register(fromAddr: Address, fromValue: string, isUnion: boolean, addr: Address, lockDay: number, name: string, enode: string, description: string, creatorIncentive: number, partnerIncentive: number, voterIncentive: number): Promise<string> {
+        if (this._logic_contract.methods.register === undefined) {
+            throw new Error("provided SuperNodeLogicABI is missing register method");
         }
         try {
-            const receipt = await this._contract.methods.register(isUnion, addr, lockDay, name, enode, description, creatorIncentive, partnerIncentive, voterIncentive).send({
+            const receipt = await this._logic_contract.methods.register(isUnion, addr, lockDay, name, enode, description, creatorIncentive, partnerIncentive, voterIncentive).send({
                 from: fromAddr,
                 value: fromValue
             });
@@ -30,12 +33,12 @@ export class SuperNode {
         }
     }
 
-    public async appendRegister(fromAddr: Address, fromValue: string, addr: Address, lockDay: number) {
-        if (this._contract.methods.appendRegister === undefined) {
-            throw new Error("provided SuperNodeABI is missing appendRegister method");
+    public async appendRegister(fromAddr: Address, fromValue: string, addr: Address, lockDay: number): Promise<string> {
+        if (this._logic_contract.methods.appendRegister === undefined) {
+            throw new Error("provided SuperNodeLogicABI is missing appendRegister method");
         }
         try {
-            const receipt = await this._contract.methods.appendRegister(addr, lockDay).send({
+            const receipt = await this._logic_contract.methods.appendRegister(addr, lockDay).send({
                 from: fromAddr,
                 value: fromValue
             });
@@ -46,12 +49,12 @@ export class SuperNode {
         }
     }
 
-    public async turnRegister(fromAddr: Address, addr: Address, lockID: number) {
-        if (this._contract.methods.turnRegister === undefined) {
-            throw new Error("provided SuperNodeABI is missing turnRegister method");
+    public async turnRegister(fromAddr: Address, addr: Address, lockID: number): Promise<string> {
+        if (this._logic_contract.methods.turnRegister === undefined) {
+            throw new Error("provided SuperNodeLogicABI is missing turnRegister method");
         }
         try {
-            const receipt = await this._contract.methods.turnRegister(addr, lockID).send({from: fromAddr});
+            const receipt = await this._logic_contract.methods.turnRegister(addr, lockID).send({from: fromAddr});
             return receipt.transactionHash;
         } catch (e) {
             const error: ContractExecutionError = e as ContractExecutionError;
@@ -59,12 +62,12 @@ export class SuperNode {
         }
     }
 
-    public async changeAddress(fromAddr: Address, addr: Address, newAddr: Address) {
-        if (this._contract.methods.changeAddress === undefined) {
-            throw new Error("provided SuperNodeABI is missing changeAddress method");
+    public async changeAddress(fromAddr: Address, addr: Address, newAddr: Address): Promise<string> {
+        if (this._logic_contract.methods.changeAddress === undefined) {
+            throw new Error("provided SuperNodeLogicABI is missing changeAddress method");
         }
         try {
-            const receipt = await this._contract.methods.changeAddress(addr, newAddr).send({from: fromAddr});
+            const receipt = await this._logic_contract.methods.changeAddress(addr, newAddr).send({from: fromAddr});
             return receipt.transactionHash;
         } catch (e) {
             const error: ContractExecutionError = e as ContractExecutionError;
@@ -72,12 +75,12 @@ export class SuperNode {
         }
     }
 
-    public async changeName(fromAddr: Address, addr: Address, name: string) {
-        if (this._contract.methods.changeName === undefined) {
-            throw new Error("provided SuperNodeABI is missing changeName method");
+    public async changeName(fromAddr: Address, addr: Address, name: string): Promise<string> {
+        if (this._logic_contract.methods.changeName === undefined) {
+            throw new Error("provided SuperNodeLogicABI is missing changeName method");
         }
         try {
-            const receipt = await this._contract.methods.changeName(addr, name).send({from: fromAddr});
+            const receipt = await this._logic_contract.methods.changeName(addr, name).send({from: fromAddr});
             return receipt.transactionHash;
         } catch (e) {
             const error: ContractExecutionError = e as ContractExecutionError;
@@ -85,12 +88,12 @@ export class SuperNode {
         }
     }
 
-    public async changeEnode(fromAddr: Address, addr: Address, enode: string) {
-        if (this._contract.methods.changeEnode === undefined) {
-            throw new Error("provided SuperNodeABI is missing changeEnode method");
+    public async changeEnode(fromAddr: Address, addr: Address, enode: string): Promise<string> {
+        if (this._logic_contract.methods.changeEnode === undefined) {
+            throw new Error("provided SuperNodeLogicABI is missing changeEnode method");
         }
         try {
-            const receipt = await this._contract.methods.changeEnode(addr, enode).send({from: fromAddr});
+            const receipt = await this._logic_contract.methods.changeEnode(addr, enode).send({from: fromAddr});
             return receipt.transactionHash;
         } catch (e) {
             const error: ContractExecutionError = e as ContractExecutionError;
@@ -98,12 +101,12 @@ export class SuperNode {
         }
     }
 
-    public async changeDescription(fromAddr: Address, addr: Address, description: string) {
-        if (this._contract.methods.changeDescription === undefined) {
-            throw new Error("provided SuperNodeABI is missing changeDescription method");
+    public async changeDescription(fromAddr: Address, addr: Address, description: string): Promise<string> {
+        if (this._logic_contract.methods.changeDescription === undefined) {
+            throw new Error("provided SuperNodeLogicABI is missing changeDescription method");
         }
         try {
-            const receipt = await this._contract.methods.changeDescription(addr, description).send({from: fromAddr});
+            const receipt = await this._logic_contract.methods.changeDescription(addr, description).send({from: fromAddr});
             return receipt.transactionHash;
         } catch (e) {
             const error: ContractExecutionError = e as ContractExecutionError;
@@ -111,12 +114,12 @@ export class SuperNode {
         }
     }
 
-    public async changeIsOfficial(fromAddr: Address, addr: Address, flag: boolean) {
-        if (this._contract.methods.changeIsOfficial === undefined) {
-            throw new Error("provided SuperNodeABI is missing changeIsOfficial method");
+    public async changeIsOfficial(fromAddr: Address, addr: Address, flag: boolean): Promise<string> {
+        if (this._logic_contract.methods.changeIsOfficial === undefined) {
+            throw new Error("provided SuperNodeLogicABI is missing changeIsOfficial method");
         }
         try {
-            const receipt = await this._contract.methods.changeIsOfficial(addr, flag).send({from: fromAddr});
+            const receipt = await this._logic_contract.methods.changeIsOfficial(addr, flag).send({from: fromAddr});
             return receipt.transactionHash;
         } catch (e) {
             const error: ContractExecutionError = e as ContractExecutionError;
@@ -125,79 +128,93 @@ export class SuperNode {
     }
 
     public async getInfo(addr: Address): Promise<SuperNodeInfo> {
-        if (this._contract.methods.getInfo === undefined) {
-            throw new Error("provided SuperNodeABI is missing getInfo method");
+        if (this._storage_contract.methods.getInfo === undefined) {
+            throw new Error("provided SuperNodeStorageABI is missing getInfo method");
         }
-        return this._contract.methods.getInfo(addr).call();
+        return this._storage_contract.methods.getInfo(addr).call();
     }
 
     public async getInfoByID(id: number): Promise<SuperNodeInfo> {
-        if (this._contract.methods.getInfoByID === undefined) {
-            throw new Error("provided SuperNodeABI is missing getInfoByID method");
+        if (this._storage_contract.methods.getInfoByID === undefined) {
+            throw new Error("provided SuperNodeStorageABI is missing getInfoByID method");
         }
-        return this._contract.methods.getInfoByID(id).call();
+        return this._storage_contract.methods.getInfoByID(id).call();
     }
 
     public async getAll(): Promise<SuperNodeInfo[]> {
-        if (this._contract.methods.getAll === undefined) {
-            throw new Error("provided SuperNodeABI is missing getAll method");
+        if (this._storage_contract.methods.getAll === undefined) {
+            throw new Error("provided SuperNodeStorageABI is missing getAll method");
         }
-        return this._contract.methods.getAll().call();
+        return this._storage_contract.methods.getAll().call();
     }
 
     public async getTops(): Promise<SuperNodeInfo[]> {
-        if (this._contract.methods.getTops === undefined) {
-            throw new Error("provided SuperNodeABI is missing getTops method");
+        if (this._storage_contract.methods.getTops === undefined) {
+            throw new Error("provided SuperNodeStorageABI is missing getTops method");
         }
-        return this._contract.methods.getTops().call();
+        return this._storage_contract.methods.getTops().call();
     }
 
     public async getOfficials(): Promise<SuperNodeInfo[]> {
-        if (this._contract.methods.getOfficials === undefined) {
-            throw new Error("provided SuperNodeABI is missing getOfficials method");
+        if (this._storage_contract.methods.getOfficials === undefined) {
+            throw new Error("provided SuperNodeStorageABI is missing getOfficials method");
         }
-        return this._contract.methods.getOfficials().call();
+        return this._storage_contract.methods.getOfficials().call();
     }
 
     public async getNum(): Promise<number> {
-        if (this._contract.methods.getNum === undefined) {
-            throw new Error("provided SuperNodeABI is missing getNum method");
+        if (this._storage_contract.methods.getNum === undefined) {
+            throw new Error("provided SuperNodeStorageABI is missing getNum method");
         }
-        return this._contract.methods.getNum().call();
+        return this._storage_contract.methods.getNum().call();
     }
 
     public async exist(addr: Address): Promise<boolean> {
-        if (this._contract.methods.exist === undefined) {
-            throw new Error("provided SuperNodeABI is missing exist method");
+        if (this._storage_contract.methods.exist === undefined) {
+            throw new Error("provided SuperNodeStorageABI is missing exist method");
         }
-        return this._contract.methods.exist(addr).call();
+        return this._storage_contract.methods.exist(addr).call();
     }
 
     public async existID(id: number): Promise<boolean> {
-        if (this._contract.methods.existID === undefined) {
-            throw new Error("provided SuperNodeABI is missing existID method");
+        if (this._storage_contract.methods.existID === undefined) {
+            throw new Error("provided SuperNodeStorageABI is missing existID method");
         }
-        return this._contract.methods.existID(id).call();
+        return this._storage_contract.methods.existID(id).call();
     }
 
     public async existName(name: string): Promise<boolean> {
-        if (this._contract.methods.existName === undefined) {
-            throw new Error("provided SuperNodeABI is missing existName method");
+        if (this._storage_contract.methods.existName === undefined) {
+            throw new Error("provided SuperNodeStorageABI is missing existName method");
         }
-        return this._contract.methods.existName(name).call();
+        return this._storage_contract.methods.existName(name).call();
     }
 
     public async existEnode(enode: string): Promise<boolean> {
-        if (this._contract.methods.existEnode === undefined) {
-            throw new Error("provided SuperNodeABI is missing existEnode method");
+        if (this._storage_contract.methods.existEnode === undefined) {
+            throw new Error("provided SuperNodeStorageABI is missing existEnode method");
         }
-        return this._contract.methods.existEnode(enode).call();
+        return this._storage_contract.methods.existEnode(enode).call();
     }
 
     public async existLockID(addr: Address, id: number): Promise<boolean> {
-        if (this._contract.methods.existLockID === undefined) {
-            throw new Error("provided SuperNodeABI is missing existLockID method");
+        if (this._storage_contract.methods.existLockID === undefined) {
+            throw new Error("provided SuperNodeStorageABI is missing existLockID method");
         }
-        return this._contract.methods.existLockID(addr, id).call();
+        return this._storage_contract.methods.existLockID(addr, id).call();
+    }
+
+    public async isValid(addr: Address): Promise<boolean> {
+        if (this._storage_contract.methods.isValid === undefined) {
+            throw new Error("provided SuperNodeStorageABI is missing isValid method");
+        }
+        return this._storage_contract.methods.isValid(addr).call();
+    }
+
+    public async isFormal(addr: Address): Promise<boolean> {
+        if (this._storage_contract.methods.isFormal === undefined) {
+            throw new Error("provided SuperNodeStorageABI is missing isFormal method");
+        }
+        return this._storage_contract.methods.isFormal(addr).call();
     }
 }
