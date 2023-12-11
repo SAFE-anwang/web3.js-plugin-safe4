@@ -1,4 +1,4 @@
-import {Address, Contract, ContractExecutionError, Web3Context} from "web3";
+import {Address, Contract, Web3Context} from "web3";
 import {AccountManagerABI} from "../safe4_abi";
 import {AccountManagerContractAddr} from "../safe4_address";
 import {AccountAmountInfo, AccountRecord, RecordUseInfo} from "../types/accountmanager";
@@ -18,65 +18,75 @@ export class AccountManager {
         if (this._contract.methods.deposit === undefined) {
             throw new Error("provided AccountManagerABI is missing deposit method");
         }
-        try {
-            const receipt = await this._contract.methods.deposit(to, lockDay).send({from: fromAddr, value: fromValue});
-            return receipt.transactionHash;
-        } catch (e) {
-            const error: ContractExecutionError = e as ContractExecutionError;
-            return error.innerError.message;
-        }
+        return new Promise<string>((resolve, reject) => {
+            this._contract.methods.deposit(to, lockDay).send({from: fromAddr, value: fromValue})
+                .on("transactionHash", hash => {
+                    resolve(hash);
+                })
+                .on("error", e => {
+                    reject(e.innerError);
+                });
+        });
     }
 
     public async withdraw(fromAddr: Address): Promise<string> {
         if (this._contract.methods.withdraw === undefined) {
             throw new Error("provided AccountManagerABI is missing withdraw method");
         }
-        try {
-            const receipt = await this._contract.methods.withdraw().send({from: fromAddr});
-            return receipt.transactionHash;
-        } catch (e) {
-            const error: ContractExecutionError = e as ContractExecutionError;
-            return error.innerError.message;
-        }
+        return new Promise<string>((resolve, reject) => {
+            this._contract.methods.withdraw().send({from: fromAddr})
+                .on("transactionHash", hash => {
+                    resolve(hash);
+                })
+                .on("error", e => {
+                    reject(e.innerError);
+                });
+        });
     }
 
     public async withdrawByID(fromAddr: Address, ids: number[]): Promise<string> {
         if (this._contract.methods.withdrawByID === undefined) {
             throw new Error("provided AccountManagerABI is missing withdrawByID method");
         }
-        try {
-            const receipt = await this._contract.methods.withdrawByID(ids).send({from: fromAddr});
-            return receipt.transactionHash;
-        } catch (e) {
-            const error: ContractExecutionError = e as ContractExecutionError;
-            return error.innerError.message;
-        }
+        return new Promise<string>((resolve, reject) => {
+            this._contract.methods.withdrawByID(ids).send({from: fromAddr})
+                .on("transactionHash", hash => {
+                    resolve(hash);
+                })
+                .on("error", e => {
+                    reject(e.innerError);
+                });
+        });
     }
 
-    public async transfer(fromAddr: Address, to: Address, amount: number, lockDay: number): Promise<string> {
+    public async transfer(fromAddr: Address, to: Address, amount: string, lockDay: number): Promise<string> {
         if (this._contract.methods.transfer === undefined) {
             throw new Error("provided AccountManagerABI is missing transfer method");
         }
-        try {
-            const receipt = await this._contract.methods.transfer(to, amount, lockDay).send({from: fromAddr});
-            return receipt.transactionHash;
-        } catch (e) {
-            const error: ContractExecutionError = e as ContractExecutionError;
-            return error.innerError.message;
-        }
+        return new Promise<string>((resolve, reject) => {
+            this._contract.methods.transfer(to, amount, lockDay).send({from: fromAddr})
+                .on("transactionHash", hash => {
+                    resolve(hash);
+                })
+                .on("error", e => {
+                    reject(e.innerError);
+                });
+        });
     }
 
     public async addLockDay(fromAddr: Address, id: number, day: number): Promise<string> {
         if (this._contract.methods.addLockDay === undefined) {
             throw new Error("provided AccountManagerABI is missing addLockDay method");
         }
-        try {
-            const receipt = await this._contract.methods.addLockDay(id, day).send({from: fromAddr});
-            return receipt.transactionHash;
-        } catch (e) {
-            const error: ContractExecutionError = e as ContractExecutionError;
-            return error.innerError.message;
-        }
+        return new Promise<string>((resolve, reject) => {
+            this._contract.methods.addLockDay(id, day).send({from: fromAddr})
+                .on("transactionHash", hash => {
+                    resolve(hash);
+                })
+                .on("error", e => {
+                    reject(e.innerError);
+                });
+        });
     }
 
     // eslint-disable-next-line class-methods-use-this
@@ -126,7 +136,7 @@ export class AccountManager {
         return this._contract.methods.getRecords(addr).call();
     }
 
-    public async getRecord0(addr: Address): Promise<AccountRecord[]> {
+    public async getRecord0(addr: Address): Promise<AccountRecord> {
         if (this._contract.methods.getRecord0 === undefined) {
             throw new Error("provided AccountManagerABI is missing getRecord0 method");
         }
