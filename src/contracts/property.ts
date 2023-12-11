@@ -1,4 +1,4 @@
-import {Address, Contract, ContractExecutionError, Web3Context} from "web3";
+import {Address, Contract, Web3Context} from "web3";
 import {PropertyABI} from "../safe4_abi";
 import {PropertyContractAddr} from "../safe4_address";
 import {PropertyInfo, UnconfirmedPropertyInfo} from "../types/property";
@@ -14,43 +14,49 @@ export class Property {
         this._contract.link(parentContext);
     }
 
-    public async add(fromAddr: Address, name: string, value: number, description: string): Promise<string> {
+    public async add(fromAddr: Address, name: string, value: string, description: string): Promise<string> {
         if (this._contract.methods.add === undefined) {
             throw new Error("provided PropertyABI is missing add method");
         }
-        try {
-            const receipt = await this._contract.methods.add(name, value, description).send({from: fromAddr});
-            return receipt.transactionHash;
-        } catch (e) {
-            const error: ContractExecutionError = e as ContractExecutionError;
-            return error.innerError.message;
-        }
+        return new Promise<string>((resolve, reject) => {
+            this._contract.methods.add(name, value, description).send({from: fromAddr})
+                .on("transactionHash", hash => {
+                    resolve(hash);
+                })
+                .on("error", e => {
+                    reject(e.innerError);
+                });
+        });
     }
 
-    public async applyUpdate(fromAddr: Address, name: string, value: number, reason: string): Promise<string> {
+    public async applyUpdate(fromAddr: Address, name: string, value: string, reason: string): Promise<string> {
         if (this._contract.methods.applyUpdate === undefined) {
             throw new Error("provided PropertyABI is missing applyUpdate method");
         }
-        try {
-            const receipt = await this._contract.methods.applyUpdate(name, value, reason).send({from: fromAddr});
-            return receipt.transactionHash;
-        } catch (e) {
-            const error: ContractExecutionError = e as ContractExecutionError;
-            return error.innerError.message;
-        }
+        return new Promise<string>((resolve, reject) => {
+            this._contract.methods.applyUpdate(name, value, reason).send({from: fromAddr})
+                .on("transactionHash", hash => {
+                    resolve(hash);
+                })
+                .on("error", e => {
+                    reject(e.innerError);
+                });
+        });
     }
 
     public async vote4Update(fromAddr: Address, name: string, voteResult: number): Promise<string> {
         if (this._contract.methods.vote4Update === undefined) {
             throw new Error("provided PropertyABI is missing vote4Update method");
         }
-        try {
-            const receipt = await this._contract.methods.vote4Update(name, voteResult).send({from: fromAddr});
-            return receipt.transactionHash;
-        } catch (e) {
-            const error: ContractExecutionError = e as ContractExecutionError;
-            return error.innerError.message;
-        }
+        return new Promise<string>((resolve, reject) => {
+            this._contract.methods.vote4Update(name, voteResult).send({from: fromAddr})
+                .on("transactionHash", hash => {
+                    resolve(hash);
+                })
+                .on("error", e => {
+                    reject(e.innerError);
+                });
+        });
     }
 
     public async getInfo(name: string): Promise<PropertyInfo> {
