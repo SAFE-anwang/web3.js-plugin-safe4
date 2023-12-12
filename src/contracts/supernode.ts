@@ -21,110 +21,120 @@ export class SuperNode {
         if (this._logic_contract.methods.register === undefined) {
             throw new Error("provided SuperNodeLogicABI is missing register method");
         }
-        try {
-            const receipt = await this._logic_contract.methods.register(isUnion, addr, lockDay, name, enode, description, creatorIncentive, partnerIncentive, voterIncentive).send({
-                from: fromAddr,
-                value: fromValue
-            });
-            return receipt.transactionHash;
-        } catch (e) {
-            const error: ContractExecutionError = e as ContractExecutionError;
-            return error.innerError.message;
-        }
+        return new Promise<string>((resolve, reject) => {
+            this._logic_contract.methods.register(isUnion, addr, lockDay, name, enode, description, creatorIncentive, partnerIncentive, voterIncentive).send({from: fromAddr, value: fromValue})
+                .on("transactionHash", hash => {
+                    resolve(hash);
+                })
+                .on("error", e => {
+                    reject(e.innerError);
+                });
+        });
     }
 
     public async appendRegister(fromAddr: Address, fromValue: string, addr: Address, lockDay: number): Promise<string> {
         if (this._logic_contract.methods.appendRegister === undefined) {
             throw new Error("provided SuperNodeLogicABI is missing appendRegister method");
         }
-        try {
-            const receipt = await this._logic_contract.methods.appendRegister(addr, lockDay).send({
-                from: fromAddr,
-                value: fromValue
-            });
-            return receipt.transactionHash;
-        } catch (e) {
-            const error: ContractExecutionError = e as ContractExecutionError;
-            return error.innerError.message;
-        }
+        return new Promise<string>((resolve, reject) => {
+            this._logic_contract.methods.appendRegister(addr, lockDay).send({from: fromAddr, value: fromValue})
+                .on("transactionHash", hash => {
+                    resolve(hash);
+                })
+                .on("error", e => {
+                    reject(e.innerError);
+                });
+        });
     }
 
     public async turnRegister(fromAddr: Address, addr: Address, lockID: number): Promise<string> {
         if (this._logic_contract.methods.turnRegister === undefined) {
             throw new Error("provided SuperNodeLogicABI is missing turnRegister method");
         }
-        try {
-            const receipt = await this._logic_contract.methods.turnRegister(addr, lockID).send({from: fromAddr});
-            return receipt.transactionHash;
-        } catch (e) {
-            const error: ContractExecutionError = e as ContractExecutionError;
-            return error.innerError.message;
-        }
+        return new Promise<string>((resolve, reject) => {
+            this._logic_contract.methods.turnRegister(addr, lockID).send({from: fromAddr})
+                .on("transactionHash", hash => {
+                    resolve(hash);
+                })
+                .on("error", e => {
+                    reject(e.innerError);
+                });
+        });
     }
 
     public async changeAddress(fromAddr: Address, addr: Address, newAddr: Address): Promise<string> {
         if (this._logic_contract.methods.changeAddress === undefined) {
             throw new Error("provided SuperNodeLogicABI is missing changeAddress method");
         }
-        try {
-            const receipt = await this._logic_contract.methods.changeAddress(addr, newAddr).send({from: fromAddr});
-            return receipt.transactionHash;
-        } catch (e) {
-            const error: ContractExecutionError = e as ContractExecutionError;
-            return error.innerError.message;
-        }
+        return new Promise<string>((resolve, reject) => {
+            this._logic_contract.methods.changeAddress(addr, newAddr).send({from: fromAddr})
+                .on("transactionHash", hash => {
+                    resolve(hash);
+                })
+                .on("error", e => {
+                    reject(e.innerError);
+                });
+        });
     }
 
     public async changeName(fromAddr: Address, addr: Address, name: string): Promise<string> {
         if (this._logic_contract.methods.changeName === undefined) {
             throw new Error("provided SuperNodeLogicABI is missing changeName method");
         }
-        try {
-            const receipt = await this._logic_contract.methods.changeName(addr, name).send({from: fromAddr});
-            return receipt.transactionHash;
-        } catch (e) {
-            const error: ContractExecutionError = e as ContractExecutionError;
-            return error.innerError.message;
-        }
+        return new Promise<string>((resolve, reject) => {
+            this._logic_contract.methods.changeName(addr, name).send({from: fromAddr})
+                .on("transactionHash", hash => {
+                    resolve(hash);
+                })
+                .on("error", e => {
+                    reject(e.innerError);
+                });
+        });
     }
 
     public async changeEnode(fromAddr: Address, addr: Address, enode: string): Promise<string> {
         if (this._logic_contract.methods.changeEnode === undefined) {
             throw new Error("provided SuperNodeLogicABI is missing changeEnode method");
         }
-        try {
-            const receipt = await this._logic_contract.methods.changeEnode(addr, enode).send({from: fromAddr});
-            return receipt.transactionHash;
-        } catch (e) {
-            const error: ContractExecutionError = e as ContractExecutionError;
-            return error.innerError.message;
-        }
+        return new Promise<string>((resolve, reject) => {
+            this._logic_contract.methods.changeEnode(addr, enode).send({from: fromAddr})
+                .on("transactionHash", hash => {
+                    resolve(hash);
+                })
+                .on("error", e => {
+                    reject(e.innerError);
+                });
+        });
     }
 
     public async changeDescription(fromAddr: Address, addr: Address, description: string): Promise<string> {
         if (this._logic_contract.methods.changeDescription === undefined) {
             throw new Error("provided SuperNodeLogicABI is missing changeDescription method");
         }
-        try {
-            const receipt = await this._logic_contract.methods.changeDescription(addr, description).send({from: fromAddr});
-            return receipt.transactionHash;
-        } catch (e) {
-            const error: ContractExecutionError = e as ContractExecutionError;
-            return error.innerError.message;
-        }
+        return new Promise<string>((resolve, reject) => {
+            this._logic_contract.methods.changeDescription(addr, description).send({from: fromAddr})
+                .on("transactionHash", hash => {
+                    resolve(hash);
+                })
+                .on("error", e => {
+                    reject(e.innerError);
+                });
+        });
     }
 
     public async changeIsOfficial(fromAddr: Address, addr: Address, flag: boolean): Promise<string> {
         if (this._logic_contract.methods.changeIsOfficial === undefined) {
             throw new Error("provided SuperNodeLogicABI is missing changeIsOfficial method");
         }
-        try {
-            const receipt = await this._logic_contract.methods.changeIsOfficial(addr, flag).send({from: fromAddr});
-            return receipt.transactionHash;
-        } catch (e) {
-            const error: ContractExecutionError = e as ContractExecutionError;
-            return error.innerError.message;
-        }
+        return new Promise<string>((resolve, reject) => {
+            this._logic_contract.methods.changeIsOfficial(addr, flag).send({from: fromAddr})
+                .on("transactionHash", hash => {
+                    resolve(hash);
+                })
+                .on("error", e => {
+                    reject(e.innerError);
+                });
+        });
     }
 
     public async getInfo(addr: Address): Promise<SuperNodeInfo> {
