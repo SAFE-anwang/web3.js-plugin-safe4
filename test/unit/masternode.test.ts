@@ -12,7 +12,7 @@ describe('Safe4Plugin MasterNode Tests', () => {
 
     test("register independent masternode", async () => {
         let fromAddr = "0xac110c0f70867f77d9d230e377043f52480a0b7d";
-        let mnAddr = "0x1ba81b0e8954ad6364b1e29f6b1b9d592137b64f";
+        let mnAddr = "0xa5cec2b8cda30da3f3170b4505cb44226b6c9dd2";
         let enode = "enode://7d9cd0f84db59f040755bb7475fddd5190521db7373e6a3d8bf35b95727851821ab7e8dcb1ad3ea89f6a7d5d2e82e052b23a2a53ea5a9a86d708c7a02d2913c8@10.0.0.203:30303";
         let description = "independent masternode";
         let flag = await isUnlocked(web3, fromAddr);
@@ -33,7 +33,7 @@ describe('Safe4Plugin MasterNode Tests', () => {
 
     test("register union masternode", async () => {
         let fromAddr = "0xac110c0f70867f77d9d230e377043f52480a0b7d";
-        let mnAddr = "0xc687154bf49cc122510c4bef48176bcd4aa22245";
+        let mnAddr = "0xd6ebea69f2d81b9ca259c0b6ed3d9ad6aa206ef1";
         let enode = "enode://7d9cd0f84db59f040755bb7475fddd5190521db7373e6a3d8bf35b95727851821ab7e8dcb1ad3ea89f6a7d5d2e82e052b23a2a53ea5a9a86d708c7a02d2913c8@10.0.0.204:30303";
         let description = "union masternode";
         let flag = await isUnlocked(web3, fromAddr);
@@ -53,8 +53,8 @@ describe('Safe4Plugin MasterNode Tests', () => {
     });
 
     test("appendRegister", async () => {
-        let fromAddr = "0xac110c0f70867f77d9d230e377043f52480a0b7d";
-        let mnAddr = "0xc687154bf49cc122510c4bef48176bcd4aa22245";
+        let fromAddr = "0x044f9c93b57efaa547f8461d4fa864eb40558cd0";
+        let mnAddr = "0xd6ebea69f2d81b9ca259c0b6ed3d9ad6aa206ef1";
         let flag = await isUnlocked(web3, fromAddr);
         if (!flag) {
             await web3.eth.personal.unlockAccount(fromAddr, '123', 1000);
@@ -73,13 +73,13 @@ describe('Safe4Plugin MasterNode Tests', () => {
 
     test("turnRegister", async () => {
         let fromAddr = "0x044f9c93b57efaa547f8461d4fa864eb40558cd0";
-        let mnAddr = "0x1ba81b0e8954ad6364b1e29f6b1b9d592137b64f";
+        let mnAddr = "0xa5cec2b8cda30da3f3170b4505cb44226b6c9dd2";
         let flag = await isUnlocked(web3, fromAddr);
         if (!flag) {
             await web3.eth.personal.unlockAccount(fromAddr, '123', 1000);
         }
         try {
-            let result = await web3.safe4.masternode.turnRegister(fromAddr, mnAddr, 6);
+            let result = await web3.safe4.masternode.turnRegister(fromAddr, mnAddr, 9);
             console.log("turnRegister-txid: ", result);
         } catch (e) {
             console.log(e.message);
@@ -92,8 +92,8 @@ describe('Safe4Plugin MasterNode Tests', () => {
 
     test("changeAddress", async () => {
         let fromAddr = "0xac110c0f70867f77d9d230e377043f52480a0b7d";
-        let mnAddr = "0xc687154bf49cc122510c4bef48176bcd4aa22245";
-        let newAddr = "0xbd08b16bf27a1a1641d8bf09d7dd666863beaffc";
+        let mnAddr = "0xd6ebea69f2d81b9ca259c0b6ed3d9ad6aa206ef1";
+        let newAddr = "0x69a6d725f772e44f11bd6d21ec5a92fdc7eab652";
         let flag = await isUnlocked(web3, fromAddr);
         if (!flag) {
             await web3.eth.personal.unlockAccount(fromAddr, '123', 1000);
@@ -111,8 +111,8 @@ describe('Safe4Plugin MasterNode Tests', () => {
     });
 
     test("changeEnode", async () => {
-        let fromAddr = "0x044f9c93b57efaa547f8461d4fa864eb40558cd0";
-        let mnAddr = "0xbd08b16bf27a1a1641d8bf09d7dd666863beaffc";
+        let fromAddr = "0xac110c0f70867f77d9d230e377043f52480a0b7d";
+        let mnAddr = "0x69a6d725f772e44f11bd6d21ec5a92fdc7eab652";
         let enode = "enode://7d9cd0f84db59f040755bb7475fddd5190521db7373e6a3d8bf35b95727851821ab7e8dcb1ad3ea89f6a7d5d2e82e052b23a2a53ea5a9a86d708c7a02d2913c8@10.0.0.205:30303";
         let flag = await isUnlocked(web3, fromAddr);
         if (!flag) {
@@ -131,8 +131,8 @@ describe('Safe4Plugin MasterNode Tests', () => {
     });
 
     test("changeDescription", async () => {
-        let fromAddr = "0x044f9c93b57efaa547f8461d4fa864eb40558cd0";
-        let mnAddr = "0xbd08b16bf27a1a1641d8bf09d7dd666863beaffc";
+        let fromAddr = "0xac110c0f70867f77d9d230e377043f52480a0b7d";
+        let mnAddr = "0x69a6d725f772e44f11bd6d21ec5a92fdc7eab652";
         let desciription = "this is a test masternode";
         let flag = await isUnlocked(web3, fromAddr);
         if (!flag) {
@@ -151,8 +151,8 @@ describe('Safe4Plugin MasterNode Tests', () => {
     });
 
     test("changeIsOfficial", async () => {
-        let fromAddr = "0x044f9c93b57efaa547f8461d4fa864eb40558cd0";
-        let mnAddr = "0xbd08b16bf27a1a1641d8bf09d7dd666863beaffc";
+        let fromAddr = "0xac110c0f70867f77d9d230e377043f52480a0b7d";
+        let mnAddr = "0x69a6d725f772e44f11bd6d21ec5a92fdc7eab652";
         let flag = await isUnlocked(web3, fromAddr);
         if (!flag) {
             await web3.eth.personal.unlockAccount(fromAddr, '123', 1000);
@@ -170,14 +170,14 @@ describe('Safe4Plugin MasterNode Tests', () => {
     });
 
     test("getInfo", async () => {
-        let mnAddr = "0xbd08b16bf27a1a1641d8bf09d7dd666863beaffc";
+        let mnAddr = "0xd6ebea69f2d81b9ca259c0b6ed3d9ad6aa206ef1";
         let result = await web3.safe4.masternode.getInfo(mnAddr);
         console.log(result);
         expect(result.enode.length).not.toEqual(0);
     });
 
     test("getInfoByID", async () => {
-        let result = await web3.safe4.masternode.getInfoByID(3);
+        let result = await web3.safe4.masternode.getInfoByID(4);
         console.log(result);
         expect(result.enode.length).not.toEqual(0);
     });
@@ -203,18 +203,18 @@ describe('Safe4Plugin MasterNode Tests', () => {
     test("getNum", async () => {
         let result = await web3.safe4.masternode.getNum();
         console.log(result);
-        expect(result).toBeGreaterThan(1n);
+        expect(result).toBeGreaterThan(2n);
     });
 
     test("exist", async () => {
-        let mnAddr = "0x1ba81b0e8954ad6364b1e29f6b1b9d592137b64f";
+        let mnAddr = "0xd6ebea69f2d81b9ca259c0b6ed3d9ad6aa206ef1";
         let result = await web3.safe4.masternode.exist(mnAddr);
         console.log(result);
         expect(result).toEqual(true);
     });
 
     test("existID", async () => {
-        let result = await web3.safe4.masternode.existID(3);
+        let result = await web3.safe4.masternode.existID(4);
         console.log(result);
         expect(result).toEqual(true);
     });
@@ -227,14 +227,14 @@ describe('Safe4Plugin MasterNode Tests', () => {
     });
 
     test("existLockID", async () => {
-        let mnAddr = "0xc687154bf49cc122510c4bef48176bcd4aa22245";
+        let mnAddr = "0xd6ebea69f2d81b9ca259c0b6ed3d9ad6aa206ef1";
         let result = await web3.safe4.masternode.existLockID(mnAddr, 9);
         console.log(result);
         expect(result).toEqual(true);
     });
 
     test("isValid", async () => {
-        let mnAddr = "0xc687154bf49cc122510c4bef48176bcd4aa22245";
+        let mnAddr = "0xd6ebea69f2d81b9ca259c0b6ed3d9ad6aa206ef1";
         let result = await web3.safe4.masternode.isValid(mnAddr);
         console.log(result);
         expect(result).toEqual(true);
