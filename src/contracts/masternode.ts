@@ -1,4 +1,4 @@
-import {Address, Contract, ContractExecutionError, Web3Context} from "web3";
+import {Address, Contract, Web3Context} from "web3";
 import {MasterNodeLogicABI, MasterNodeStorageABI} from "../safe4_abi";
 import {MasterNodeInfo} from "../types/masternode";
 import {MasterNodeLogicContractAddr, MasterNodeStorageContractAddr} from "../safe4_address";
