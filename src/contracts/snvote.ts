@@ -2,7 +2,6 @@ import {Address, Contract, ContractExecutionError, Web3Context} from "web3";
 import {SNVoteABI} from "../safe4_abi";
 import {SNVoteContractAddr} from "../safe4_address";
 import {SNVoteRetInfo} from "../types/snvote";
-import {AccountAmountInfo} from "../types/accountmanager";
 
 export class SNVote {
     private readonly _contract: Contract<typeof SNVoteABI>
@@ -19,39 +18,45 @@ export class SNVote {
         if (this._contract.methods.voteOrApproval === undefined) {
             throw new Error("provided SNVoteABI is missing voteOrApproval method");
         }
-        try {
-            const receipt = await this._contract.methods.voteOrApproval(isVote, dstAddr, recordIDs).send({from: fromAddr});
-            return receipt.transactionHash;
-        } catch (e) {
-            const error: ContractExecutionError = e as ContractExecutionError;
-            return error.innerError.message;
-        }
+        return new Promise<string>((resolve, reject) => {
+            this._contract.methods.voteOrApproval(isVote, dstAddr, recordIDs).send({from: fromAddr})
+                .on("transactionHash", hash => {
+                    resolve(hash);
+                })
+                .on("error", e => {
+                    reject(e.innerError);
+                });
+        });
     }
 
     public async removeVoteOrApproval(fromAddr: Address, recordIDs: number[]): Promise<string> {
         if (this._contract.methods.removeVoteOrApproval === undefined) {
             throw new Error("provided SNVoteABI is missing removeVoteOrApproval method");
         }
-        try {
-            const receipt = await this._contract.methods.removeVoteOrApproval(recordIDs).send({from: fromAddr});
-            return receipt.transactionHash;
-        } catch (e) {
-            const error: ContractExecutionError = e as ContractExecutionError;
-            return error.innerError.message;
-        }
+        return new Promise<string>((resolve, reject) => {
+            this._contract.methods.removeVoteOrApproval(recordIDs).send({from: fromAddr})
+                .on("transactionHash", hash => {
+                    resolve(hash);
+                })
+                .on("error", e => {
+                    reject(e.innerError);
+                });
+        });
     }
 
     public async proxyVote(fromAddr: Address, snAddr: Address): Promise<string> {
         if (this._contract.methods.proxyVote === undefined) {
             throw new Error("provided SNVoteABI is missing proxyVote method");
         }
-        try {
-            const receipt = await this._contract.methods.proxyVote(snAddr).send({from: fromAddr});
-            return receipt.transactionHash;
-        } catch (e) {
-            const error: ContractExecutionError = e as ContractExecutionError;
-            return error.innerError.message;
-        }
+        return new Promise<string>((resolve, reject) => {
+            this._contract.methods.proxyVote(snAddr).send({from: fromAddr})
+                .on("transactionHash", hash => {
+                    resolve(hash);
+                })
+                .on("error", e => {
+                    reject(e.innerError);
+                });
+        });
     }
 
     // eslint-disable-next-line class-methods-use-this
