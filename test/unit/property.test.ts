@@ -51,9 +51,9 @@ describe('Safe4Plugin Property Tests', () => {
     });
 
     test("vote4Update", async () => {
-        let accounts: string[] = ["0xc0dac1e1544ee3531d8b78ea1d56613779868b1d", "0x9d16bb0db8625630f19bc92e74cae910aa050d91"];
-        for (let i = 0; i < accounts.length; i++) {
-            let fromAddr = accounts[i];
+        let fromAddrs: string[] = ["0xc0dac1e1544ee3531d8b78ea1d56613779868b1d", "0x9d16bb0db8625630f19bc92e74cae910aa050d91"];
+        for (let i = 0; i < fromAddrs.length; i++) {
+            let fromAddr = fromAddrs[i];
             let flag = await isUnlocked(web3, fromAddr);
             if (!flag) {
                 await web3.eth.personal.unlockAccount(fromAddr, '123', 1000);

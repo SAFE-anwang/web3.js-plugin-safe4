@@ -84,61 +84,61 @@ describe('Safe4Plugin Account-Manager Tests', () => {
     });
 
     test("addLockDay", async() => {
-        let account = "0x044f9c93b57efaa547f8461d4fa864eb40558cd0";
-        let flag = await isUnlocked(web3, account);
+        let fromAddr = "0x044f9c93b57efaa547f8461d4fa864eb40558cd0";
+        let flag = await isUnlocked(web3, fromAddr);
         if (!flag) {
-            await web3.eth.personal.unlockAccount(account, '123', 1000);
+            await web3.eth.personal.unlockAccount(fromAddr, '123', 1000);
         }
         try {
-            let result = await web3.safe4.account.addLockDay(account, 7, 1);
+            let result = await web3.safe4.account.addLockDay(fromAddr, 7, 1);
             console.log("addLockDay-txid: ", result);
         } catch (e) {
             console.log(e.message);
         } finally {
             if (!flag) {
-                await web3.eth.personal.lockAccount(account);
+                await web3.eth.personal.lockAccount(fromAddr);
             }
         }
     });
 
     test("getTotalAmount", async () => {
-        let account = "0x044f9c93b57efaa547f8461d4fa864eb40558cd0";
-        let result = await web3.safe4.account.getTotalAmount(account);
+        let fromAddr = "0x044f9c93b57efaa547f8461d4fa864eb40558cd0";
+        let result = await web3.safe4.account.getTotalAmount(fromAddr);
         console.log(result);
         expect(result.amount).toBeGreaterThanOrEqual(BigInt(web3.utils.toWei(5000, 'ether')));
     });
 
     test("getAvailableAmount", async () => {
-        let account = "0x044f9c93b57efaa547f8461d4fa864eb40558cd0";
-        let result = await web3.safe4.account.getAvailableAmount(account);
+        let fromAddr = "0x044f9c93b57efaa547f8461d4fa864eb40558cd0";
+        let result = await web3.safe4.account.getAvailableAmount(fromAddr);
         console.log(result);
         expect(result.amount).toBeGreaterThanOrEqual(0n);
     });
 
     test("getLockedAmount", async () => {
-        let account = "0x044f9c93b57efaa547f8461d4fa864eb40558cd0";
-        let result = await web3.safe4.account.getLockedAmount(account);
+        let fromAddr = "0x044f9c93b57efaa547f8461d4fa864eb40558cd0";
+        let result = await web3.safe4.account.getLockedAmount(fromAddr);
         console.log(result);
         expect(result.amount).toBeGreaterThanOrEqual(BigInt(web3.utils.toWei(5000, 'ether')));
     });
 
     test("getUsedAmount", async () => {
-        let account = "0x044f9c93b57efaa547f8461d4fa864eb40558cd0";
-        let result = await web3.safe4.account.getUsedAmount(account);
+        let fromAddr = "0x044f9c93b57efaa547f8461d4fa864eb40558cd0";
+        let result = await web3.safe4.account.getUsedAmount(fromAddr);
         console.log(result);
         expect(result.amount).toBeGreaterThanOrEqual(BigInt(web3.utils.toWei(5000, 'ether')));
     });
 
     test("getRecords", async () => {
-        let account = "0x044f9c93b57efaa547f8461d4fa864eb40558cd0";
-        let result = await web3.safe4.account.getRecords(account);
+        let fromAddr = "0x044f9c93b57efaa547f8461d4fa864eb40558cd0";
+        let result = await web3.safe4.account.getRecords(fromAddr);
         console.log(result);
         expect(result.length).toBeGreaterThanOrEqual(1);
     });
 
     test("getRecord0", async () => {
-        let account = "0x044f9c93b57efaa547f8461d4fa864eb40558cd0";
-        let result = await web3.safe4.account.getRecord0(account);
+        let fromAddr = "0x044f9c93b57efaa547f8461d4fa864eb40558cd0";
+        let result = await web3.safe4.account.getRecord0(fromAddr);
         console.log(result);
         expect(result.amount).toBeGreaterThanOrEqual(0n);
     });
