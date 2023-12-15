@@ -14,108 +14,124 @@ export class Proposal {
         this._contract.link(parentContext);
     }
 
-    public async create(fromAddr: Address, title: string, payAmount: number, payTimes: number, startPayTime: number, endPayTime: number, description: string): Promise<string> {
+    public async create(fromAddr: Address, title: string, payAmount: string, payTimes: number, startPayTime: number, endPayTime: number, description: string): Promise<string> {
         if (this._contract.methods.create === undefined) {
             throw new Error("provided ProposalABI is missing create method");
         }
-        try {
-            const receipt = await this._contract.methods.create(title, payAmount, payTimes, startPayTime, endPayTime, description).send({from: fromAddr});
-            return receipt.transactionHash;
-        } catch (e) {
-            const error: ContractExecutionError = e as ContractExecutionError;
-            return error.innerError.message;
-        }
+        return new Promise<string>((resolve, reject) => {
+            this._contract.methods.create(title, payAmount, payTimes, startPayTime, endPayTime, description).send({from: fromAddr, value: '1000000000000000000'})
+                .on("transactionHash", hash => {
+                    resolve(hash);
+                })
+                .on("error", e => {
+                    reject(e.innerError);
+                });
+        });
     }
 
     public async vote(fromAddr: Address, id: number, voteResult: number): Promise<string> {
         if (this._contract.methods.vote === undefined) {
             throw new Error("provided ProposalABI is missing vote method");
         }
-        try {
-            const receipt = await this._contract.methods.vote(id, voteResult).send({from: fromAddr});
-            return receipt.transactionHash;
-        } catch (e) {
-            const error: ContractExecutionError = e as ContractExecutionError;
-            return error.innerError.message;
-        }
+        return new Promise<string>((resolve, reject) => {
+            this._contract.methods.vote(id, voteResult).send({from: fromAddr})
+                .on("transactionHash", hash => {
+                    resolve(hash);
+                })
+                .on("error", e => {
+                    reject(e.innerError);
+                });
+        });
     }
 
     public async changeTitle(fromAddr: Address, id: number, title: string): Promise<string> {
         if (this._contract.methods.changeTitle === undefined) {
             throw new Error("provided ProposalABI is missing changeTitle method");
         }
-        try {
-            const receipt = await this._contract.methods.changeTitle(id, title).send({from: fromAddr});
-            return receipt.transactionHash;
-        } catch (e) {
-            const error: ContractExecutionError = e as ContractExecutionError;
-            return error.innerError.message;
-        }
+        return new Promise<string>((resolve, reject) => {
+            this._contract.methods.changeTitle(id, title).send({from: fromAddr})
+                .on("transactionHash", hash => {
+                    resolve(hash);
+                })
+                .on("error", e => {
+                    reject(e.innerError);
+                });
+        });
     }
 
-    public async changePayAmount(fromAddr: Address, id: number, payAmount: number): Promise<string> {
+    public async changePayAmount(fromAddr: Address, id: number, payAmount: string): Promise<string> {
         if (this._contract.methods.changePayAmount === undefined) {
             throw new Error("provided ProposalABI is missing changePayAmount method");
         }
-        try {
-            const receipt = await this._contract.methods.changePayAmount(id, payAmount).send({from: fromAddr});
-            return receipt.transactionHash;
-        } catch (e) {
-            const error: ContractExecutionError = e as ContractExecutionError;
-            return error.innerError.message;
-        }
+        return new Promise<string>((resolve, reject) => {
+            this._contract.methods.changePayAmount(id, payAmount).send({from: fromAddr})
+                .on("transactionHash", hash => {
+                    resolve(hash);
+                })
+                .on("error", e => {
+                    reject(e.innerError);
+                });
+        });
     }
 
     public async changePayTimes(fromAddr: Address, id: number, payTimes: number): Promise<string> {
         if (this._contract.methods.changePayTimes === undefined) {
             throw new Error("provided ProposalABI is missing changePayTimes method");
         }
-        try {
-            const receipt = await this._contract.methods.changePayTimes(id, payTimes).send({from: fromAddr});
-            return receipt.transactionHash;
-        } catch (e) {
-            const error: ContractExecutionError = e as ContractExecutionError;
-            return error.innerError.message;
-        }
+        return new Promise<string>((resolve, reject) => {
+            this._contract.methods.changePayTimes(id, payTimes).send({from: fromAddr})
+                .on("transactionHash", hash => {
+                    resolve(hash);
+                })
+                .on("error", e => {
+                    reject(e.innerError);
+                });
+        });
     }
 
     public async changeStartPayTime(fromAddr: Address, id: number, startPayTime: number): Promise<string> {
         if (this._contract.methods.changeStartPayTime === undefined) {
             throw new Error("provided ProposalABI is missing changeStartPayTime method");
         }
-        try {
-            const receipt = await this._contract.methods.changeStartPayTime(id, startPayTime).send({from: fromAddr});
-            return receipt.transactionHash;
-        } catch (e) {
-            const error: ContractExecutionError = e as ContractExecutionError;
-            return error.innerError.message;
-        }
+        return new Promise<string>((resolve, reject) => {
+            this._contract.methods.changeStartPayTime(id, startPayTime).send({from: fromAddr})
+                .on("transactionHash", hash => {
+                    resolve(hash);
+                })
+                .on("error", e => {
+                    reject(e.innerError);
+                });
+        });
     }
 
     public async changeEndPayTime(fromAddr: Address, id: number, endPayTime: number): Promise<string> {
         if (this._contract.methods.changeEndPayTime === undefined) {
             throw new Error("provided ProposalABI is missing changeEndPayTime method");
         }
-        try {
-            const receipt = await this._contract.methods.changeEndPayTime(id, endPayTime).send({from: fromAddr});
-            return receipt.transactionHash;
-        } catch (e) {
-            const error: ContractExecutionError = e as ContractExecutionError;
-            return error.innerError.message;
-        }
+        return new Promise<string>((resolve, reject) => {
+            this._contract.methods.changeEndPayTime(id, endPayTime).send({from: fromAddr})
+                .on("transactionHash", hash => {
+                    resolve(hash);
+                })
+                .on("error", e => {
+                    reject(e.innerError);
+                });
+        });
     }
 
     public async changeDescription(fromAddr: Address, id: number, description: string): Promise<string> {
         if (this._contract.methods.changeDescription === undefined) {
             throw new Error("provided ProposalABI is missing changeDescription method");
         }
-        try {
-            const receipt = await this._contract.methods.changeDescription(id, description).send({from: fromAddr});
-            return receipt.transactionHash;
-        } catch (e) {
-            const error: ContractExecutionError = e as ContractExecutionError;
-            return error.innerError.message;
-        }
+        return new Promise<string>((resolve, reject) => {
+            this._contract.methods.changeDescription(id, description).send({from: fromAddr})
+                .on("transactionHash", hash => {
+                    resolve(hash);
+                })
+                .on("error", e => {
+                    reject(e.innerError);
+                });
+        });
     }
 
     public async getInfo(id: number): Promise<ProposalInfo> {
