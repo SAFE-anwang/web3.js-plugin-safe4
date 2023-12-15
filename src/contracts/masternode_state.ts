@@ -18,13 +18,15 @@ export class MasterNodeState {
         if (this._contract.methods.upload === undefined) {
             throw new Error("provided MasterNodeStateABI is missing upload method");
         }
-        try {
-            const receipt = await this._contract.methods.upload(ids, states).send({from: fromAddr});
-            return receipt.transactionHash;
-        } catch (e) {
-            const error: ContractExecutionError = e as ContractExecutionError;
-            return error.innerError.message;
-        }
+        return new Promise<string>((resolve, reject) => {
+            this._contract.methods.upload(ids, states).send({from: fromAddr})
+                .on("transactionHash", hash => {
+                    resolve(hash);
+                })
+                .on("error", e => {
+                    reject(e.innerError);
+                });
+        });
     }
 
     public async get(id: number): Promise<StateEntry[]> {
