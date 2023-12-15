@@ -11,9 +11,9 @@ describe('Safe4Plugin SNVote Tests', () => {
     });
 
     test("vote", async() => {
-        let fromAddr = "0x044f9c93b57efaa547f8461d4fa864eb40558cd0";
+        let fromAddr = "0x796c4d7f02b18edc9f78fc82903db79266cb04d6";
         let snAddr = "0x8b96c90b86cfdbdc971bb54c263a6d021e7f4894";
-        let recordIDs = [0, 9];
+        let recordIDs = [13];
         let flag = await isUnlocked(web3, fromAddr);
         if (!flag) {
             await web3.eth.personal.unlockAccount(fromAddr, '123', 1000);
@@ -31,9 +31,9 @@ describe('Safe4Plugin SNVote Tests', () => {
     });
 
     test("approval", async() => {
-        let fromAddr = "0x044f9c93b57efaa547f8461d4fa864eb40558cd0";
+        let fromAddr = "0x796c4d7f02b18edc9f78fc82903db79266cb04d6";
         let proxyAddr = "0xa7705a20fa3cf57548acdef5472b0d484db4c973";
-        let recordIDs = [0, 9];
+        let recordIDs = [14];
         let flag = await isUnlocked(web3, fromAddr);
         if (!flag) {
             await web3.eth.personal.unlockAccount(fromAddr, '123', 1000);
@@ -51,8 +51,8 @@ describe('Safe4Plugin SNVote Tests', () => {
     });
 
     test("removeVoteOrApproval", async() => {
-        let fromAddr = "0x044f9c93b57efaa547f8461d4fa864eb40558cd0";
-        let recordIDs = [9, 10];
+        let fromAddr = "0x796c4d7f02b18edc9f78fc82903db79266cb04d6";
+        let recordIDs = [13];
         let flag = await isUnlocked(web3, fromAddr);
         if (!flag) {
             await web3.eth.personal.unlockAccount(fromAddr, '123', 1000);
@@ -71,7 +71,7 @@ describe('Safe4Plugin SNVote Tests', () => {
 
     test("proxyVote", async() => {
         let fromAddr = "0xa7705a20fa3cf57548acdef5472b0d484db4c973";
-        let snAddr = "0xd52114c4071b5bfbd06a657a3db538bfd559a481";
+        let snAddr = "0x9d16bb0db8625630f19bc92e74cae910aa050d91";
         let flag = await isUnlocked(web3, fromAddr);
         if (!flag) {
             await web3.eth.personal.unlockAccount(fromAddr, '123', 1000);
@@ -89,14 +89,14 @@ describe('Safe4Plugin SNVote Tests', () => {
     });
 
     test("getSuperNodes4Voter", async () => {
-        let voterAddr = "0x044f9c93b57efaa547f8461d4fa864eb40558cd0";
+        let voterAddr = "0x796c4d7f02b18edc9f78fc82903db79266cb04d6";
         let result = await web3.safe4.snvote.getSuperNodes4Voter(voterAddr);
         console.log(result);
         expect(result.addrs.length).toBeGreaterThanOrEqual(1);
     });
 
     test("getRecordIDs4Voter", async () => {
-        let voterAddr = "0x044f9c93b57efaa547f8461d4fa864eb40558cd0";
+        let voterAddr = "0x796c4d7f02b18edc9f78fc82903db79266cb04d6";
         let result = await web3.safe4.snvote.getRecordIDs4Voter(voterAddr);
         console.log(result);
         expect(result.length).toBeGreaterThanOrEqual(1);
@@ -117,14 +117,14 @@ describe('Safe4Plugin SNVote Tests', () => {
     });
 
     test("getProxies4Voter", async () => {
-        let voterAddr = "0x044f9c93b57efaa547f8461d4fa864eb40558cd0";
+        let voterAddr = "0x796c4d7f02b18edc9f78fc82903db79266cb04d6";
         let result = await web3.safe4.snvote.getProxies4Voter(voterAddr);
         console.log(result);
         expect(result.addrs.length).toBeGreaterThanOrEqual(1);
     });
 
     test("getProxiedRecordIDs4Voter", async () => {
-        let voterAddr = "0x044f9c93b57efaa547f8461d4fa864eb40558cd0";
+        let voterAddr = "0x796c4d7f02b18edc9f78fc82903db79266cb04d6";
         let result = await web3.safe4.snvote.getProxiedRecordIDs4Voter(voterAddr);
         console.log(result);
         expect(result.length).toBeGreaterThanOrEqual(1);
