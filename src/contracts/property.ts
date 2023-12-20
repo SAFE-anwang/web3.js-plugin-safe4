@@ -75,7 +75,7 @@ export class Property {
 
     public async getValue(name: string): Promise<bigint> {
         if (this._contract.methods.getValue === undefined) {
-            throw new Error('provided propertyABI is missing getValue method');
+            throw new Error('provided PropertyABI is missing getValue method');
         }
         return this._contract.methods.getValue(name).call();
     }
@@ -96,14 +96,14 @@ export class Property {
 
     public async exist(name: string): Promise<boolean> {
         if (this._contract.methods.exist === undefined) {
-            throw new Error('provided propertyABI is missing exist method');
+            throw new Error('provided PropertyABI is missing exist method');
         }
         return this._contract.methods.exist(name).call();
     }
 
     public async existUnconfirmed(name: string): Promise<boolean> {
         if (this._contract.methods.existUnconfirmed === undefined) {
-            throw new Error('provided propertyABI is missing existUnconfirmed method');
+            throw new Error('provided PropertyABI is missing existUnconfirmed method');
         }
         return this._contract.methods.existUnconfirmed(name).call();
     }
