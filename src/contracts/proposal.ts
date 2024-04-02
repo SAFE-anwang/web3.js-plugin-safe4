@@ -1,9 +1,8 @@
-import {Contract, Web3Context} from "web3";
+import {Contract, Web3, Web3Context} from "web3";
 import {ProposalABI} from "../safe4_abi";
 import {ProposalContractAddr} from "../safe4_address";
 import {ProposalInfo, ProposalVoteInfo} from "../types/proposal";
 import {ContractUitl} from "../utils/ContractUitl";
-import {Safe3Util} from "../utils/Safe3Util";
 
 export class Proposal {
     private readonly _contract: Contract<typeof ProposalABI>
@@ -118,7 +117,9 @@ export class Proposal {
         if (this._contract.methods.getMines === undefined) {
             throw new Error("provided ProposalABI is missing getMines method");
         }
-        return this._contract.methods.getMines(start, count).call({from: Safe3Util.getSafe4Address(privateKey)});
+        const web3 = new Web3(this._contract.provider);
+        const wallet = web3.eth.accounts.privateKeyToAccount(privateKey);
+        return this._contract.methods.getMines(start, count).call({from: wallet.address});
     }
 
     public async exist(id: number): Promise<boolean> {

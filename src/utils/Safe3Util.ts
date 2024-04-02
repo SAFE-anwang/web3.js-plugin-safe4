@@ -1,7 +1,6 @@
 import {privateKeyVerify, publicKeyCreate} from "secp256k1";
 import {ripemd160, sha256} from "bitcoinjs-lib/src/crypto";
 import {encode} from "bs58";
-import keccak256 from "keccak256";
 
 // eslint-disable-next-line @typescript-eslint/no-extraneous-class
 export class Safe3Util {
@@ -35,7 +34,7 @@ export class Safe3Util {
         pubkeys.push(this.getCompressedPublicKey(privkey));
         const safe3Addrs: string[] = [];
         pubkeys.forEach((pubkey) => {
-            console.log("pubkey: " + Buffer.from(pubkey).toString('hex'));
+            // console.log("pubkey: " + Buffer.from(pubkey).toString('hex'));
             let h = sha256(Buffer.from(pubkey));
             let r = ripemd160(h);
             let temp = "4c";
@@ -43,20 +42,10 @@ export class Safe3Util {
             h = sha256(Buffer.from(temp, 'hex'));
             h = sha256(h);
             temp = temp.concat(h.subarray(0, 4).toString('hex'));
-            console.log(temp);
-            console.log(encode(Buffer.from(temp, 'hex')))
+            // console.log(temp);
+            // console.log(encode(Buffer.from(temp, 'hex')))
             safe3Addrs.push(encode(Buffer.from(temp, 'hex')));
         });
         return safe3Addrs;
-    }
-
-    public static getSafe4Address(privateKey: string) {
-        const pubkey = this.getUncompressedPublicKey(this.removePrefix(privateKey))
-        console.log(Buffer.from(pubkey.subarray((1))).toString("hex"));
-        const h = keccak256(Buffer.from(pubkey.subarray(1)))
-        console.log(h.toString("hex"));
-        const addr = "0x" + h.toString('hex').substring(24);
-        console.log(addr);
-        return addr;
     }
 }

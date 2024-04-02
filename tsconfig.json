@@ -16,7 +16,7 @@
     "removeComments": true,
     "sourceMap": true,
     "declarationMap": true,
-    "strict": true,
+    "strict": false,
     "strictNullChecks": true,
     "outDir": "lib",
     "esModuleInterop": true
