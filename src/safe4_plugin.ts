@@ -5,7 +5,6 @@ import {MasterNode} from "./contracts/masternode";
 import {SuperNode} from "./contracts/supernode";
 import {SNVote} from "./contracts/snvote";
 import {Proposal} from "./contracts/proposal";
-import {Safe3} from "./contracts/safe3";
 
 export class Safe4Plugin extends Web3PluginBase {
     public pluginNamespace = "safe4";
@@ -15,7 +14,6 @@ export class Safe4Plugin extends Web3PluginBase {
     public supernode: SuperNode;
     public snvote: SNVote;
     public proposal: Proposal;
-    public safe3: Safe3;
 
     public constructor() {
         super();
@@ -25,7 +23,6 @@ export class Safe4Plugin extends Web3PluginBase {
         this.supernode = new SuperNode();
         this.snvote = new SNVote();
         this.proposal = new Proposal();
-        this.safe3 = new Safe3();
     }
 
     public link(parentContext: Web3Context) {
@@ -36,7 +33,6 @@ export class Safe4Plugin extends Web3PluginBase {
         this.supernode.link(parentContext);
         this.snvote.link(parentContext);
         this.proposal.link(parentContext);
-        this.safe3.link(parentContext);
     }
 }
 

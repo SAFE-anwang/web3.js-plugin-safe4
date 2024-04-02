@@ -20,5 +20,5 @@ export interface RecordUseInfo {
 
 export interface AccountAmountInfo {
     amount: bigint;
-    ids: bigint[];
+    num: bigint;
 }

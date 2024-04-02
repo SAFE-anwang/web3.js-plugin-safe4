@@ -1,6 +1,5 @@
 import {Web3} from "web3";
 import {Safe4Plugin} from "../../src";
-import {isUnlocked} from "./test_util";
 
 describe('Safe4Plugin Account-Manager Tests', () => {
     let web3: Web3;
@@ -10,135 +9,54 @@ describe('Safe4Plugin Account-Manager Tests', () => {
         web3.registerPlugin(new Safe4Plugin());
     });
 
-    test("deposit", async() => {
-        let fromAddr = "0x044f9c93b57efaa547f8461d4fa864eb40558cd0";
-        let flag = await isUnlocked(web3, fromAddr);
-        if (!flag) {
-            await web3.eth.personal.unlockAccount(fromAddr, '123', 1000);
-        }
+    test("deposit", async () => {
+        let privateKey = "0xcfa6ac66802dfd1afd9e8b5b68aa5d65e3f303eaf10b809adefcd71ad524fbc7";
+        let toAddr = "0x80d8b8f308770ce14252173abb00075cc9082d03";
         try {
-            let result = await web3.safe4.account.deposit(fromAddr, web3.utils.toWei(1, 'ether'), fromAddr, 0);
+            let result = await web3.safe4.account.deposit(privateKey, web3.utils.toWei(100, 'ether'), toAddr, 0);
             console.log("deposit-txid: ", result);
         } catch (e) {
             console.log(e.message);
-        } finally {
-            if (!flag) {
-                await web3.eth.personal.lockAccount(fromAddr);
-            }
         }
     });
 
-    test("withdraw", async() => {
-        let fromAddr = "0x044f9c93b57efaa547f8461d4fa864eb40558cd0";
-        let flag = await isUnlocked(web3, fromAddr);
-        if (!flag) {
-            await web3.eth.personal.unlockAccount(fromAddr, '123', 1000);
-        }
+    test("withdraw", async () => {
+        let privateKey = "0xcfa6ac66802dfd1afd9e8b5b68aa5d65e3f303eaf10b809adefcd71ad524fbc7";
         try {
-            let result = await web3.safe4.account.withdraw(fromAddr);
+            let result = await web3.safe4.account.withdraw(privateKey);
             console.log("withdraw-txid: ", result);
         } catch (e) {
             console.log(e.message);
-        } finally {
-            if (!flag) {
-                await web3.eth.personal.lockAccount(fromAddr);
-            }
         }
     });
 
-    test("withdrawByID", async() => {
-        let fromAddr = "0x044f9c93b57efaa547f8461d4fa864eb40558cd0";
-        let flag = await isUnlocked(web3, fromAddr);
-        if (!flag) {
-            await web3.eth.personal.unlockAccount(fromAddr, '123', 1000);
-        }
+    test("withdrawByID", async () => {
+        let privateKey = "0xcfa6ac66802dfd1afd9e8b5b68aa5d65e3f303eaf10b809adefcd71ad524fbc7";
         try {
-            let result = await web3.safe4.account.withdrawByID(fromAddr, [0,1,2,3]);
+            let result = await web3.safe4.account.withdrawByID(privateKey, [0, 1, 2, 3]);
             console.log("withdrawByID-txid: ", result);
         } catch (e) {
             console.log(e.message);
-        } finally {
-            if (!flag) {
-                await web3.eth.personal.lockAccount(fromAddr);
-            }
-        }
-    });
-
-    test("transfer", async() => {
-        let fromAddr = "0x044f9c93b57efaa547f8461d4fa864eb40558cd0";
-        let toAddr = "0x044f9c93b57efaa547f8461d4fa864eb40558cd0";
-        let flag = await isUnlocked(web3, fromAddr);
-        if (!flag) {
-            await web3.eth.personal.unlockAccount(fromAddr, '123', 1000);
-        }
-        try {
-            let result = await web3.safe4.account.transfer(fromAddr, toAddr, web3.utils.toWei(1, 'ether'), 1);
-            console.log("transfer-txid: ", result);
-        } catch (e) {
-            console.log(e.message);
-        } finally {
-            if (!flag) {
-                await web3.eth.personal.lockAccount(fromAddr);
-            }
-        }
-    });
-
-    test("addLockDay", async() => {
-        let fromAddr = "0x044f9c93b57efaa547f8461d4fa864eb40558cd0";
-        let flag = await isUnlocked(web3, fromAddr);
-        if (!flag) {
-            await web3.eth.personal.unlockAccount(fromAddr, '123', 1000);
-        }
-        try {
-            let result = await web3.safe4.account.addLockDay(fromAddr, 7, 1);
-            console.log("addLockDay-txid: ", result);
-        } catch (e) {
-            console.log(e.message);
-        } finally {
-            if (!flag) {
-                await web3.eth.personal.lockAccount(fromAddr);
-            }
         }
     });
 
     test("getTotalAmount", async () => {
-        let fromAddr = "0x044f9c93b57efaa547f8461d4fa864eb40558cd0";
-        let result = await web3.safe4.account.getTotalAmount(fromAddr);
+        let addr = "0x044f9c93b57efaa547f8461d4fa864eb40558cd0";
+        let result = await web3.safe4.account.getTotalAmount(addr);
         console.log(result);
         expect(result.amount).toBeGreaterThanOrEqual(BigInt(web3.utils.toWei(5000, 'ether')));
     });
 
-    test("getAvailableAmount", async () => {
-        let fromAddr = "0x044f9c93b57efaa547f8461d4fa864eb40558cd0";
-        let result = await web3.safe4.account.getAvailableAmount(fromAddr);
+    test("getTotalIDs", async () => {
+        let addr = "0x044f9c93b57efaa547f8461d4fa864eb40558cd0";
+        let result = await web3.safe4.account.getTotalIDs(addr, 0, 100);
         console.log(result);
-        expect(result.amount).toBeGreaterThanOrEqual(0n);
-    });
-
-    test("getLockedAmount", async () => {
-        let fromAddr = "0x044f9c93b57efaa547f8461d4fa864eb40558cd0";
-        let result = await web3.safe4.account.getLockedAmount(fromAddr);
-        console.log(result);
-        expect(result.amount).toBeGreaterThanOrEqual(BigInt(web3.utils.toWei(5000, 'ether')));
-    });
-
-    test("getUsedAmount", async () => {
-        let fromAddr = "0x044f9c93b57efaa547f8461d4fa864eb40558cd0";
-        let result = await web3.safe4.account.getUsedAmount(fromAddr);
-        console.log(result);
-        expect(result.amount).toBeGreaterThanOrEqual(BigInt(web3.utils.toWei(5000, 'ether')));
-    });
-
-    test("getRecords", async () => {
-        let fromAddr = "0x044f9c93b57efaa547f8461d4fa864eb40558cd0";
-        let result = await web3.safe4.account.getRecords(fromAddr);
-        console.log(result);
-        expect(result.length).toBeGreaterThanOrEqual(1);
+        expect(result.length).toBeGreaterThan(0);
     });
 
     test("getRecord0", async () => {
-        let fromAddr = "0x044f9c93b57efaa547f8461d4fa864eb40558cd0";
-        let result = await web3.safe4.account.getRecord0(fromAddr);
+        let addr = "0x044f9c93b57efaa547f8461d4fa864eb40558cd0";
+        let result = await web3.safe4.account.getRecord0(addr);
         console.log(result);
         expect(result.amount).toBeGreaterThanOrEqual(0n);
     });
@@ -150,7 +68,7 @@ describe('Safe4Plugin Account-Manager Tests', () => {
     });
 
     test("getRecordUseInfo", async () => {
-        let result = await web3.safe4.account.getRecordUseInfo(4);
+        let result = await web3.safe4.account.getRecordUseInfo(1);
         console.log(result);
         expect(result.frozenAddr).not.toEqual('0x0000000000000000000000000000000000000000');
     });

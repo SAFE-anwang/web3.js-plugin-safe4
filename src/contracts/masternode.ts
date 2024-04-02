@@ -2,9 +2,9 @@ import {Address, Contract, Web3Context} from "web3";
 import {MasterNodeLogicABI, MasterNodeStorageABI} from "../safe4_abi";
 import {MasterNodeInfo} from "../types/masternode";
 import {MasterNodeLogicContractAddr, MasterNodeStorageContractAddr} from "../safe4_address";
+import {ContractUitl} from "../utils/ContractUitl";
 
 export class MasterNode {
-
     private readonly _storage_contract: Contract<typeof MasterNodeStorageABI>
     private readonly _logic_contract: Contract<typeof MasterNodeLogicABI>
 
@@ -18,109 +18,46 @@ export class MasterNode {
         this._logic_contract.link(parentContext);
     }
 
-    public async register(fromAddr: Address, fromValue: string, isUnion: boolean, addr: Address, lockDay: number, enode: string, description: string, creatorIncentive: number, partnerIncentive: number): Promise<string> {
+    public async register(privateKey: string, value: string, isUnion: boolean, addr: Address, lockDay: number, enode: string, description: string, creatorIncentive: number, partnerIncentive: number): Promise<string> {
         if (this._logic_contract.methods.register === undefined) {
             throw new Error("provided MasterNodeLogicABI is missing register method");
         }
-        return new Promise<string>((resolve, reject) => {
-            this._logic_contract.methods.register(isUnion, addr, lockDay, enode, description, creatorIncentive, partnerIncentive).send({from: fromAddr, value: fromValue})
-                .on("transactionHash", hash => {
-                    resolve(hash);
-                })
-                .on("error", e => {
-                    reject(e.innerError);
-                });
-        });
+        return ContractUitl.invokeContract(this._logic_contract, privateKey, value, this._logic_contract.methods.register(isUnion, addr, lockDay, enode, description, creatorIncentive, partnerIncentive).encodeABI());
     }
 
-    public async appendRegister(fromAddr: Address, fromValue: string, addr: Address, lockDay: number): Promise<string> {
+    public async appendRegister(privateKey: string, value: string, addr: Address, lockDay: number): Promise<string> {
         if (this._logic_contract.methods.appendRegister === undefined) {
             throw new Error("provided MasterNodeLogicABI is missing appendRegister method");
         }
-        return new Promise<string>((resolve, reject) => {
-            this._logic_contract.methods.appendRegister(addr, lockDay).send({from: fromAddr, value: fromValue})
-                .on("transactionHash", hash => {
-                    resolve(hash);
-                })
-                .on("error", e => {
-                    reject(e.innerError);
-                });
-        });
+        return ContractUitl.invokeContract(this._logic_contract, privateKey, value, this._logic_contract.methods.appendRegister(addr, lockDay).encodeABI());
     }
 
-    public async turnRegister(fromAddr: Address, addr: Address, lockID: number): Promise<string> {
+    public async turnRegister(privateKey: string, addr: Address, lockID: number): Promise<string> {
         if (this._logic_contract.methods.turnRegister === undefined) {
             throw new Error("provided MasterNodeLogicABI is missing turnRegister method");
         }
-        return new Promise<string>((resolve, reject) => {
-            this._logic_contract.methods.turnRegister(addr, lockID).send({from: fromAddr})
-                .on("transactionHash", hash => {
-                    resolve(hash);
-                })
-                .on("error", e => {
-                    reject(e.innerError);
-                });
-        });
+        return ContractUitl.invokeContract(this._logic_contract, privateKey, 0, this._logic_contract.methods.turnRegister(addr, lockID).encodeABI());
     }
 
-    public async changeAddress(fromAddr: Address, addr: Address, newAddr: Address): Promise<string> {
+    public async changeAddress(privateKey: string, addr: Address, newAddr: Address): Promise<string> {
         if (this._logic_contract.methods.changeAddress === undefined) {
             throw new Error("provided MasterNodeLogicABI is missing changeAddress method");
         }
-        return new Promise<string>((resolve, reject) => {
-            this._logic_contract.methods.changeAddress(addr, newAddr).send({from: fromAddr})
-                .on("transactionHash", hash => {
-                    resolve(hash);
-                })
-                .on("error", e => {
-                    reject(e.innerError);
-                });
-        });
+        return ContractUitl.invokeContract(this._logic_contract, privateKey, 0, this._logic_contract.methods.changeAddress(addr, newAddr).encodeABI());
     }
 
-    public async changeEnode(fromAddr: Address, addr: Address, enode: string): Promise<string> {
+    public async changeEnode(privateKey: string, addr: Address, enode: string): Promise<string> {
         if (this._logic_contract.methods.changeEnode === undefined) {
             throw new Error("provided MasterNodeLogicABI is missing changeEnode method");
         }
-        return new Promise<string>((resolve, reject) => {
-            this._logic_contract.methods.changeEnode(addr, enode).send({from: fromAddr})
-                .on("transactionHash", hash => {
-                    resolve(hash);
-                })
-                .on("error", e => {
-                    reject(e.innerError);
-                });
-        });
+        return ContractUitl.invokeContract(this._logic_contract, privateKey, 0, this._logic_contract.methods.changeEnode(addr, enode).encodeABI());
     }
 
-    public async changeDescription(fromAddr: Address, addr: Address, description: string): Promise<string> {
+    public async changeDescription(privateKey: string, addr: Address, description: string): Promise<string> {
         if (this._logic_contract.methods.changeDescription === undefined) {
             throw new Error("provided MasterNodeLogicABI is missing changeDescription method");
         }
-        return new Promise<string>((resolve, reject) => {
-            this._logic_contract.methods.changeDescription(addr, description).send({from: fromAddr})
-                .on("transactionHash", hash => {
-                    resolve(hash);
-                })
-                .on("error", e => {
-                    reject(e.innerError);
-                });
-        });
-    }
-
-    public async changeIsOfficial(fromAddr: Address, addr: Address, flag: boolean): Promise<string> {
-        if (this._logic_contract.methods.changeIsOfficial === undefined) {
-            throw new Error("provided MasterNodeLogicABI is missing changeIsOfficial method");
-        }
-        return new Promise<string>((resolve, reject) => {
-            this._logic_contract.methods.changeIsOfficial(addr, flag).send({from: fromAddr})
-                .on("transactionHash", hash => {
-                    resolve(hash);
-                })
-                .on("error", e => {
-                    reject(e.innerError);
-                });
-        });
+        return ContractUitl.invokeContract(this._logic_contract, privateKey, 0, this._logic_contract.methods.changeDescription(addr, description).encodeABI());
     }
 
     public async getInfo(addr: Address): Promise<MasterNodeInfo> {
@@ -144,25 +81,25 @@ export class MasterNode {
         return this._storage_contract.methods.getNext().call();
     }
 
-    public async getAll(): Promise<MasterNodeInfo[]> {
-        if (this._storage_contract.methods.getAll === undefined) {
-            throw new Error("provided MasterNodeStorageABI is missing getAll method");
-        }
-        return this._storage_contract.methods.getAll().call();
-    }
-
-    public async getOfficials(): Promise<MasterNodeInfo[]> {
-        if (this._storage_contract.methods.getOfficials === undefined) {
-            throw new Error("provided MasterNodeStorageABI is missing getOfficials method");
-        }
-        return this._storage_contract.methods.getOfficials().call();
-    }
-
     public async getNum(): Promise<bigint> {
         if (this._storage_contract.methods.getNum === undefined) {
             throw new Error("provided MasterNodeStorageABI is missing getNum method");
         }
         return this._storage_contract.methods.getNum().call();
+    }
+
+    public async getAll(start: number, count: number): Promise<Address[]> {
+        if (this._storage_contract.methods.getAll === undefined) {
+            throw new Error("provided MasterNodeStorageABI is missing getAll method");
+        }
+        return this._storage_contract.methods.getAll(start, count).call();
+    }
+
+    public async getOfficials(): Promise<Address[]> {
+        if (this._storage_contract.methods.getOfficials === undefined) {
+            throw new Error("provided MasterNodeStorageABI is missing getOfficials method");
+        }
+        return this._storage_contract.methods.getOfficials().call();
     }
 
     public async exist(addr: Address): Promise<boolean> {
@@ -186,11 +123,11 @@ export class MasterNode {
         return this._storage_contract.methods.existEnode(enode).call();
     }
 
-    public async existLockID(addr: Address, id: number): Promise<boolean> {
+    public async existLockID(addr: Address, lockID: number): Promise<boolean> {
         if (this._storage_contract.methods.existLockID === undefined) {
             throw new Error("provided MasterNodeStorageABI is missing existLockID method");
         }
-        return this._storage_contract.methods.existLockID(addr, id).call();
+        return this._storage_contract.methods.existLockID(addr, lockID).call();
     }
 
     public async isValid(addr: Address): Promise<boolean> {

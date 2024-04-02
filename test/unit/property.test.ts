@@ -1,6 +1,5 @@
 import {Web3} from "web3";
 import {Safe4Plugin} from "../../src";
-import {isUnlocked} from "./test_util";
 
 describe('Safe4Plugin Property Tests', () => {
     let web3: Web3;
@@ -10,64 +9,23 @@ describe('Safe4Plugin Property Tests', () => {
         web3.registerPlugin(new Safe4Plugin());
     });
 
-    test("add", async () => {
-        let fromAddr = "0xac110c0f70867f77d9d230e377043f52480a0b7d";
-        let flag = await isUnlocked(web3, fromAddr);
-        if (!flag) {
-            await web3.eth.personal.unlockAccount(fromAddr, '123', 1000);
-        }
+    test("applyUpdate", async () => {
+        let privateKey = "0xcfa6ac66802dfd1afd9e8b5b68aa5d65e3f303eaf10b809adefcd71ad524fbc7";
         try {
-            let result = await web3.safe4.sysproperty.add(fromAddr, "test_name1", "2", "test name1");
-            console.log("add-txid: ", result);
+            let result = await web3.safe4.sysproperty.applyUpdate(privateKey, "test_name1", "100", "apply update test_name1");
+            console.log("applyUpdate-txid: ", result);
         } catch (e) {
             console.log(e.message);
-        } finally {
-            if (!flag) {
-                await web3.eth.personal.lockAccount(fromAddr);
-            }
-        }
-    });
-
-    test("applyUpdate", async () => {
-        let fromAddr = "0x044f9c93b57efaa547f8461d4fa864eb40558cd0";
-        let names = ["block_space", "gas_price"];
-        let values = ["15", "15000000"];
-        for (let i = 0; i < names.length; i++) {
-            let flag = await isUnlocked(web3, fromAddr);
-            if (!flag) {
-                await web3.eth.personal.unlockAccount(fromAddr, '123', 1000);
-            }
-            try {
-                let result = await web3.safe4.sysproperty.applyUpdate(fromAddr, names[i], values[i], "apply update " + names[i]);
-                console.log("applyUpdate-txid: ", result);
-            } catch (e) {
-                console.log(e.message);
-            } finally {
-                if (!flag) {
-                    await web3.eth.personal.lockAccount(fromAddr);
-                }
-            }
         }
     });
 
     test("vote4Update", async () => {
-        let fromAddrs: string[] = ["0xc0dac1e1544ee3531d8b78ea1d56613779868b1d", "0x9d16bb0db8625630f19bc92e74cae910aa050d91"];
-        for (let i = 0; i < fromAddrs.length; i++) {
-            let fromAddr = fromAddrs[i];
-            let flag = await isUnlocked(web3, fromAddr);
-            if (!flag) {
-                await web3.eth.personal.unlockAccount(fromAddr, '123', 1000);
-            }
-            try {
-                let result = await web3.safe4.sysproperty.vote4Update(fromAddr, "block_space", 1);
-                console.log("vote4Update-txid: ", result);
-            } catch (e) {
-                console.log(e.message);
-            } finally {
-                if (!flag) {
-                    await web3.eth.personal.lockAccount(fromAddr);
-                }
-            }
+        let privateKey = "0xcfa6ac66802dfd1afd9e8b5b68aa5d65e3f303eaf10b809adefcd71ad524fbc7";
+        try {
+            let result = await web3.safe4.sysproperty.vote4Update(privateKey, "test_name1", 1);
+            console.log("vote4Update-txid: ", result);
+        } catch (e) {
+            console.log(e.message);
         }
     });
 
@@ -78,26 +36,50 @@ describe('Safe4Plugin Property Tests', () => {
     });
 
     test("getUnconfirmedInfo", async () => {
-        let result = await web3.safe4.sysproperty.getUnconfirmedInfo("block_space");
+        let result = await web3.safe4.sysproperty.getUnconfirmedInfo("test_name1");
         console.log(result);
-        expect(result.value).toEqual(15n);
+        expect(result.value).toEqual(100n);
     });
 
     test("getValue", async () => {
-        let result = await web3.safe4.sysproperty.getValue("block_space");
+        let result = await web3.safe4.sysproperty.getValue("gas_price");
         console.log(result);
-        expect(result).toEqual(3n);
+        expect(result).toEqual(10000000n);
+    });
+
+    test("getNum", async () => {
+        let result = await web3.safe4.sysproperty.getNum();
+        console.log(result);
+        expect(result).toBeGreaterThan(0n);
     });
 
     test("getAll", async () => {
-        let result = await web3.safe4.sysproperty.getAll();
+        let result = await web3.safe4.sysproperty.getAll(0, 100);
         console.log(result);
         expect(result.length).toBeGreaterThanOrEqual(1);
     });
 
+    test("getUnconfirmedNum", async () => {
+        let result = await web3.safe4.sysproperty.getUnconfirmedNum();
+        console.log(result);
+        expect(result).toBeGreaterThan(0n);
+    });
+
     test("getAllUnconfirmed", async () => {
-        let result = await web3.safe4.sysproperty.getAllUnconfirmed();
+        let result = await web3.safe4.sysproperty.getAllUnconfirmed(0, 100);
         console.log(result);
         expect(result.length).toBeGreaterThanOrEqual(0);
+    });
+
+    test("exist", async () => {
+        let result = await web3.safe4.sysproperty.exist("gas_price");
+        console.log(result);
+        expect(result).toEqual(true);
+    });
+
+    test("existUnconfirmed", async () => {
+        let result = await web3.safe4.sysproperty.existUnconfirmed("test_name1");
+        console.log(result);
+        expect(result).toEqual(true);
     });
 });

@@ -13,11 +13,6 @@ export interface MasterNodeIncentivePlan {
     readonly voter: bigint;
 }
 
-export interface MasterNodeStateInfo {
-    readonly state: bigint;
-    readonly height: bigint;
-}
-
 export interface MasterNodeInfo {
     readonly id: bigint;
     readonly addr: Address;
@@ -25,7 +20,7 @@ export interface MasterNodeInfo {
     readonly enode: string;
     readonly description: string;
     readonly isOfficial: boolean;
-    readonly stateInfo: MasterNodeStateInfo;
+    readonly state: bigint;
     readonly founders: MasterNodeMemberInfo[];
     readonly incentivePlan: MasterNodeIncentivePlan;
     readonly lastRewardHeight: bigint;

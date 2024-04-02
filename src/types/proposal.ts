@@ -9,9 +9,12 @@ export interface ProposalInfo {
     readonly startPayTime: bigint;
     readonly endPayTime: bigint;
     readonly description: string;
-    readonly voters: Address[];
-    readonly voteResults: bigint[];
     readonly state: bigint;
     readonly createHeight: bigint;
     readonly updateHeight: bigint;
+}
+
+export interface ProposalVoteInfo {
+    readonly voter: Address;
+    readonly voteResult: bigint;
 }

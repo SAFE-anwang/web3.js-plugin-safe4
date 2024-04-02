@@ -13,18 +13,6 @@ export interface SuperNodeIncentivePlan {
     readonly voter: bigint;
 }
 
-export interface SuperNodeStateInfo {
-    readonly state: bigint;
-    readonly height: bigint;
-}
-
-export interface SuperNodeVoteInfo {
-    readonly voters: SuperNodeMemberInfo[];
-    readonly totalAmount: bigint;
-    readonly totalNum: bigint;
-    readonly height: bigint;
-}
-
 export interface SuperNodeInfo {
     readonly id: bigint;
     readonly name: string;
@@ -33,10 +21,9 @@ export interface SuperNodeInfo {
     readonly enode: string;
     readonly description: string;
     readonly isOfficial: boolean;
-    readonly stateInfo: SuperNodeStateInfo;
+    readonly state: bigint;
     readonly founders: SuperNodeMemberInfo[];
     readonly incentivePlan: SuperNodeIncentivePlan;
-    readonly voteInfo: SuperNodeVoteInfo;
     readonly lastRewardHeight: bigint;
     readonly createHeight: bigint;
     readonly updateHeight: bigint;

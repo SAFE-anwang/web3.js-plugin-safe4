@@ -1,6 +1,5 @@
 import {Web3} from "web3";
 import {Safe4Plugin} from "../../src";
-import {isUnlocked} from "./test_util";
 
 describe('Safe4Plugin SuperNode Tests', () => {
     let web3: Web3;
@@ -11,183 +10,100 @@ describe('Safe4Plugin SuperNode Tests', () => {
     });
 
     test("register independent supernode", async () => {
-        let fromAddr = "0xac110c0f70867f77d9d230e377043f52480a0b7d";
+        let privateKey = "0xcfa6ac66802dfd1afd9e8b5b68aa5d65e3f303eaf10b809adefcd71ad524fbc7";
         let snAddr = "0xd52114c4071b5bfbd06a657a3db538bfd559a481";
         let name = "i-sn";
         let enode = "enode://7d9cd0f84db59f040755bb7475fddd5190521db7373e6a3d8bf35b95727851821ab7e8dcb1ad3ea89f6a7d5d2e82e052b23a2a53ea5a9a86d708c7a02d2913c8@10.0.0.103:30303";
         let description = "independent supernode";
-        let flag = await isUnlocked(web3, fromAddr);
-        if (!flag) {
-            await web3.eth.personal.unlockAccount(fromAddr, '123', 1000);
-        }
         try {
-            let result = await web3.safe4.supernode.register(fromAddr, web3.utils.toWei(5000, 'ether'), false, snAddr, 720, name, enode, description, 10, 40, 50);
+            let result = await web3.safe4.supernode.register(privateKey, web3.utils.toWei(5000, 'ether'), false, snAddr, 720, name, enode, description, 10, 40, 50);
             console.log("register-txid: ", result);
         } catch (e) {
             console.log(e.message);
-        } finally {
-            if (!flag) {
-                await web3.eth.personal.lockAccount(fromAddr);
-            }
         }
     });
 
     test("register union supernode", async () => {
-        let fromAddr = "0xac110c0f70867f77d9d230e377043f52480a0b7d";
+        let privateKey = "0xcfa6ac66802dfd1afd9e8b5b68aa5d65e3f303eaf10b809adefcd71ad524fbc7";
         let snAddr = "0x26e701eb4369c9892bb45381bc853aa80e5aa6e8";
         let name = "u-sn";
         let enode = "enode://7d9cd0f84db59f040755bb7475fddd5190521db7373e6a3d8bf35b95727851821ab7e8dcb1ad3ea89f6a7d5d2e82e052b23a2a53ea5a9a86d708c7a02d2913c8@10.0.0.104:30303";
         let description = "union supernode";
-        let flag = await isUnlocked(web3, fromAddr);
-        if (!flag) {
-            await web3.eth.personal.unlockAccount(fromAddr, '123', 1000);
-        }
         try {
-            let result = await web3.safe4.supernode.register(fromAddr, web3.utils.toWei(1000, 'ether'), true, snAddr, 720, name, enode, description, 10, 40, 50);
+            let result = await web3.safe4.supernode.register(privateKey, web3.utils.toWei(1000, 'ether'), true, snAddr, 720, name, enode, description, 10, 40, 50);
             console.log("register-txid: ", result);
         } catch (e) {
             console.log(e.message);
-        } finally {
-            if (!flag) {
-                await web3.eth.personal.lockAccount(fromAddr);
-            }
         }
     });
 
     test("appendRegister", async () => {
-        let fromAddr = "0x044f9c93b57efaa547f8461d4fa864eb40558cd0";
+        let privateKey = "0xcfa6ac66802dfd1afd9e8b5b68aa5d65e3f303eaf10b809adefcd71ad524fbc7";
         let snAddr = "0x26e701eb4369c9892bb45381bc853aa80e5aa6e8";
-        let flag = await isUnlocked(web3, fromAddr);
-        if (!flag) {
-            await web3.eth.personal.unlockAccount(fromAddr, '123', 1000);
-        }
         try {
-            let result = await web3.safe4.supernode.appendRegister(fromAddr, web3.utils.toWei(4000, 'ether'), snAddr, 360);
+            let result = await web3.safe4.supernode.appendRegister(privateKey, web3.utils.toWei(4000, 'ether'), snAddr, 360);
             console.log("appendRegister-txid: ", result);
         } catch (e) {
             console.log(e.message);
-        } finally {
-            if (!flag) {
-                await web3.eth.personal.lockAccount(fromAddr);
-            }
         }
     });
 
     test("turnRegister", async () => {
-        let fromAddr = "0x044f9c93b57efaa547f8461d4fa864eb40558cd0";
+        let privateKey = "0xcfa6ac66802dfd1afd9e8b5b68aa5d65e3f303eaf10b809adefcd71ad524fbc7";
         let snAddr = "0xd52114c4071b5bfbd06a657a3db538bfd559a481";
-        let flag = await isUnlocked(web3, fromAddr);
-        if (!flag) {
-            await web3.eth.personal.unlockAccount(fromAddr, '123', 1000);
-        }
         try {
-            let result = await web3.safe4.supernode.turnRegister(fromAddr, snAddr, 9);
+            let result = await web3.safe4.supernode.turnRegister(privateKey, snAddr, 9);
             console.log("turnRegister-txid: ", result);
         } catch (e) {
             console.log(e.message);
-        } finally {
-            if (!flag) {
-                await web3.eth.personal.lockAccount(fromAddr);
-            }
         }
     });
 
     test("changeAddress", async () => {
-        let fromAddr = "0xac110c0f70867f77d9d230e377043f52480a0b7d";
+        let privateKey = "0xcfa6ac66802dfd1afd9e8b5b68aa5d65e3f303eaf10b809adefcd71ad524fbc7";
         let snAddr = "0x26e701eb4369c9892bb45381bc853aa80e5aa6e8";
         let newAddr = "0xa981b5f8d3cdb950243b970a6420e4b703a23006";
-        let flag = await isUnlocked(web3, fromAddr);
-        if (!flag) {
-            await web3.eth.personal.unlockAccount(fromAddr, '123', 1000);
-        }
         try {
-            let result = await web3.safe4.supernode.changeAddress(fromAddr, snAddr, newAddr);
+            let result = await web3.safe4.supernode.changeAddress(privateKey, snAddr, newAddr);
             console.log("changeAddress-txid: ", result);
         } catch (e) {
             console.log(e.message);
-        } finally {
-            if (!flag) {
-                await web3.eth.personal.lockAccount(fromAddr);
-            }
         }
     });
 
     test("changeName", async () => {
-        let fromAddr = "0xac110c0f70867f77d9d230e377043f52480a0b7d";
+        let privateKey = "0xcfa6ac66802dfd1afd9e8b5b68aa5d65e3f303eaf10b809adefcd71ad524fbc7";
         let snAddr = "0xa981b5f8d3cdb950243b970a6420e4b703a23006";
         let name = "test-sn";
-        let flag = await isUnlocked(web3, fromAddr);
-        if (!flag) {
-            await web3.eth.personal.unlockAccount(fromAddr, '123', 1000);
-        }
         try {
-            let result = await web3.safe4.supernode.changeName(fromAddr, snAddr, name);
+            let result = await web3.safe4.supernode.changeName(privateKey, snAddr, name);
             console.log("changeName-txid: ", result);
         } catch (e) {
             console.log(e.message);
-        } finally {
-            if (!flag) {
-                await web3.eth.personal.lockAccount(fromAddr);
-            }
         }
     });
 
     test("changeEnode", async () => {
-        let fromAddr = "0xac110c0f70867f77d9d230e377043f52480a0b7d";
+        let privateKey = "0xcfa6ac66802dfd1afd9e8b5b68aa5d65e3f303eaf10b809adefcd71ad524fbc7";
         let snAddr = "0xa981b5f8d3cdb950243b970a6420e4b703a23006";
         let enode = "enode://7d9cd0f84db59f040755bb7475fddd5190521db7373e6a3d8bf35b95727851821ab7e8dcb1ad3ea89f6a7d5d2e82e052b23a2a53ea5a9a86d708c7a02d2913c8@10.0.0.105:30303";
-        let flag = await isUnlocked(web3, fromAddr);
-        if (!flag) {
-            await web3.eth.personal.unlockAccount(fromAddr, '123', 1000);
-        }
         try {
-            let result = await web3.safe4.supernode.changeEnode(fromAddr, snAddr, enode);
+            let result = await web3.safe4.supernode.changeEnode(privateKey, snAddr, enode);
             console.log("changeEnode-txid: ", result);
         } catch (e) {
             console.log(e.message);
-        } finally {
-            if (!flag) {
-                await web3.eth.personal.lockAccount(fromAddr);
-            }
         }
     });
 
     test("changeDescription", async () => {
-        let fromAddr = "0xac110c0f70867f77d9d230e377043f52480a0b7d";
+        let privateKey = "0xcfa6ac66802dfd1afd9e8b5b68aa5d65e3f303eaf10b809adefcd71ad524fbc7";
         let snAddr = "0xa981b5f8d3cdb950243b970a6420e4b703a23006";
         let desciription = "this is a test supernode";
-        let flag = await isUnlocked(web3, fromAddr);
-        if (!flag) {
-            await web3.eth.personal.unlockAccount(fromAddr, '123', 1000);
-        }
         try {
-            let result = await web3.safe4.supernode.changeDescription(fromAddr, snAddr, desciription);
+            let result = await web3.safe4.supernode.changeDescription(privateKey, snAddr, desciription);
             console.log("changeDescription-txid: ", result);
         } catch (e) {
             console.log(e.message);
-        } finally {
-            if (!flag) {
-                await web3.eth.personal.lockAccount(fromAddr);
-            }
-        }
-    });
-
-    test("changeIsOfficial", async () => {
-        let fromAddr = "0xac110c0f70867f77d9d230e377043f52480a0b7d";
-        let snAddr = "0xa981b5f8d3cdb950243b970a6420e4b703a23006";
-        let flag = await isUnlocked(web3, fromAddr);
-        if (!flag) {
-            await web3.eth.personal.unlockAccount(fromAddr, '123', 1000);
-        }
-        try {
-            let result = await web3.safe4.supernode.changeIsOfficial(fromAddr, snAddr, true);
-            console.log("changeIsOfficial-txid: ", result);
-        } catch (e) {
-            console.log(e.message);
-        } finally {
-            if (!flag) {
-                await web3.eth.personal.lockAccount(fromAddr);
-            }
         }
     });
 
@@ -204,8 +120,14 @@ describe('Safe4Plugin SuperNode Tests', () => {
         expect(result.enode.length).not.toEqual(0);
     });
 
+    test("getNum", async () => {
+        let result = await web3.safe4.supernode.getNum();
+        console.log(result);
+        expect(result).toBeGreaterThanOrEqual(4n);
+    });
+
     test("getAll", async () => {
-        let result = await web3.safe4.supernode.getAll();
+        let result = await web3.safe4.supernode.getAll(0, 100);
         console.log(result);
         expect(result.length).toBeGreaterThanOrEqual(4);
     });
@@ -220,12 +142,6 @@ describe('Safe4Plugin SuperNode Tests', () => {
         let result = await web3.safe4.supernode.getOfficials();
         console.log(result);
         expect(result.length).toBeGreaterThanOrEqual(4);
-    });
-
-    test("getNum", async () => {
-        let result = await web3.safe4.supernode.getNum();
-        console.log(result);
-        expect(result).toBeGreaterThanOrEqual(4n);
     });
 
     test("exist", async () => {
