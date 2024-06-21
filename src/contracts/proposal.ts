@@ -106,11 +106,13 @@ export class Proposal {
         return this._contract.methods.getAll(start, count).call();
     }
 
-    public async getMineNum(): Promise<bigint> {
+    public async getMineNum(privateKey: string): Promise<bigint> {
         if (this._contract.methods.getMineNum === undefined) {
             throw new Error("provided ProposalABI is missing getMineNum method");
         }
-        return this._contract.methods.getMineNum().call();
+        const web3 = new Web3(this._contract.provider);
+        const wallet = web3.eth.accounts.privateKeyToAccount(privateKey);
+        return this._contract.methods.getMineNum().call({from: wallet.address});
     }
 
     public async getMines(privateKey: string, start: number, count: number): Promise<bigint[]> {
