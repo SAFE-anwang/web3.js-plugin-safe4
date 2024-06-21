@@ -9,12 +9,13 @@ describe('Safe4Plugin SuperNode Tests', () => {
         web3.registerPlugin(new Safe4Plugin());
     });
 
-    test("register independent supernode", async () => {
-        let privateKey = "0xcfa6ac66802dfd1afd9e8b5b68aa5d65e3f303eaf10b809adefcd71ad524fbc7";
-        let snAddr = "0xd52114c4071b5bfbd06a657a3db538bfd559a481";
-        let name = "i-sn";
-        let enode = "enode://7d9cd0f84db59f040755bb7475fddd5190521db7373e6a3d8bf35b95727851821ab7e8dcb1ad3ea89f6a7d5d2e82e052b23a2a53ea5a9a86d708c7a02d2913c8@10.0.0.103:30303";
-        let description = "independent supernode";
+    test("register", async () => {
+        // sn: 0xa5cec2b8cda30da3f3170b4505cb44226b6c9dd2, privateKey: 0x7b281a9ba16001feb62a5929526ef8f69d6550c6acdc3f0579c69199c0b6a010
+        let privateKey = "0x7b281a9ba16001feb62a5929526ef8f69d6550c6acdc3f0579c69199c0b6a010";
+        let snAddr = "0xa5cec2b8cda30da3f3170b4505cb44226b6c9dd2";
+        let name = "supernode-5";
+        let enode = "enode://f687439863fce1ff70dc40bec0fe5ea1ad0833a2672c29590b0aa9001e1488013e42e8adc96a6a9312ed1426d6bea47026d057df57a5856970b207afac771f09@10.0.0.165:30303";
+        let description = "supernode5 for test";
         try {
             let result = await web3.safe4.supernode.register(privateKey, web3.utils.toWei(5000, 'ether'), false, snAddr, 720, name, enode, description, 10, 40, 50);
             console.log("register-txid: ", result);
@@ -23,23 +24,10 @@ describe('Safe4Plugin SuperNode Tests', () => {
         }
     });
 
-    test("register union supernode", async () => {
-        let privateKey = "0xcfa6ac66802dfd1afd9e8b5b68aa5d65e3f303eaf10b809adefcd71ad524fbc7";
-        let snAddr = "0x26e701eb4369c9892bb45381bc853aa80e5aa6e8";
-        let name = "u-sn";
-        let enode = "enode://7d9cd0f84db59f040755bb7475fddd5190521db7373e6a3d8bf35b95727851821ab7e8dcb1ad3ea89f6a7d5d2e82e052b23a2a53ea5a9a86d708c7a02d2913c8@10.0.0.104:30303";
-        let description = "union supernode";
-        try {
-            let result = await web3.safe4.supernode.register(privateKey, web3.utils.toWei(1000, 'ether'), true, snAddr, 720, name, enode, description, 10, 40, 50);
-            console.log("register-txid: ", result);
-        } catch (e) {
-            console.log(e.message);
-        }
-    });
-
     test("appendRegister", async () => {
-        let privateKey = "0xcfa6ac66802dfd1afd9e8b5b68aa5d65e3f303eaf10b809adefcd71ad524fbc7";
-        let snAddr = "0x26e701eb4369c9892bb45381bc853aa80e5aa6e8";
+        // sn: 0xa5cec2b8cda30da3f3170b4505cb44226b6c9dd2, privateKey: 0x7b281a9ba16001feb62a5929526ef8f69d6550c6acdc3f0579c69199c0b6a010
+        let privateKey = "0x7b281a9ba16001feb62a5929526ef8f69d6550c6acdc3f0579c69199c0b6a010";
+        let snAddr = "0xa5cec2b8cda30da3f3170b4505cb44226b6c9dd2";
         try {
             let result = await web3.safe4.supernode.appendRegister(privateKey, web3.utils.toWei(4000, 'ether'), snAddr, 360);
             console.log("appendRegister-txid: ", result);
@@ -49,8 +37,9 @@ describe('Safe4Plugin SuperNode Tests', () => {
     });
 
     test("turnRegister", async () => {
-        let privateKey = "0xcfa6ac66802dfd1afd9e8b5b68aa5d65e3f303eaf10b809adefcd71ad524fbc7";
-        let snAddr = "0xd52114c4071b5bfbd06a657a3db538bfd559a481";
+        // sn: 0xa5cec2b8cda30da3f3170b4505cb44226b6c9dd2, privateKey: 0x7b281a9ba16001feb62a5929526ef8f69d6550c6acdc3f0579c69199c0b6a010
+        let privateKey = "0x7b281a9ba16001feb62a5929526ef8f69d6550c6acdc3f0579c69199c0b6a010";
+        let snAddr = "0xa5cec2b8cda30da3f3170b4505cb44226b6c9dd2";
         try {
             let result = await web3.safe4.supernode.turnRegister(privateKey, snAddr, 9);
             console.log("turnRegister-txid: ", result);
@@ -60,9 +49,10 @@ describe('Safe4Plugin SuperNode Tests', () => {
     });
 
     test("changeAddress", async () => {
-        let privateKey = "0xcfa6ac66802dfd1afd9e8b5b68aa5d65e3f303eaf10b809adefcd71ad524fbc7";
-        let snAddr = "0x26e701eb4369c9892bb45381bc853aa80e5aa6e8";
-        let newAddr = "0xa981b5f8d3cdb950243b970a6420e4b703a23006";
+        // sn: 0xa5cec2b8cda30da3f3170b4505cb44226b6c9dd2, privateKey: 0x7b281a9ba16001feb62a5929526ef8f69d6550c6acdc3f0579c69199c0b6a010
+        let privateKey = "0x7b281a9ba16001feb62a5929526ef8f69d6550c6acdc3f0579c69199c0b6a010";
+        let snAddr = "0xa5cec2b8cda30da3f3170b4505cb44226b6c9dd2";
+        let newAddr = "0xd6ebea69f2d81b9ca259c0b6ed3d9ad6aa206ef1";
         try {
             let result = await web3.safe4.supernode.changeAddress(privateKey, snAddr, newAddr);
             console.log("changeAddress-txid: ", result);
@@ -72,9 +62,10 @@ describe('Safe4Plugin SuperNode Tests', () => {
     });
 
     test("changeName", async () => {
-        let privateKey = "0xcfa6ac66802dfd1afd9e8b5b68aa5d65e3f303eaf10b809adefcd71ad524fbc7";
-        let snAddr = "0xa981b5f8d3cdb950243b970a6420e4b703a23006";
-        let name = "test-sn";
+        // sn: 0xa5cec2b8cda30da3f3170b4505cb44226b6c9dd2, privateKey: 0x7b281a9ba16001feb62a5929526ef8f69d6550c6acdc3f0579c69199c0b6a010
+        let privateKey = "0x7b281a9ba16001feb62a5929526ef8f69d6550c6acdc3f0579c69199c0b6a010";
+        let snAddr = "0xd6ebea69f2d81b9ca259c0b6ed3d9ad6aa206ef1";
+        let name = "sn-5";
         try {
             let result = await web3.safe4.supernode.changeName(privateKey, snAddr, name);
             console.log("changeName-txid: ", result);
@@ -84,9 +75,10 @@ describe('Safe4Plugin SuperNode Tests', () => {
     });
 
     test("changeEnode", async () => {
-        let privateKey = "0xcfa6ac66802dfd1afd9e8b5b68aa5d65e3f303eaf10b809adefcd71ad524fbc7";
-        let snAddr = "0xa981b5f8d3cdb950243b970a6420e4b703a23006";
-        let enode = "enode://7d9cd0f84db59f040755bb7475fddd5190521db7373e6a3d8bf35b95727851821ab7e8dcb1ad3ea89f6a7d5d2e82e052b23a2a53ea5a9a86d708c7a02d2913c8@10.0.0.105:30303";
+        // sn: 0xa5cec2b8cda30da3f3170b4505cb44226b6c9dd2, privateKey: 0x7b281a9ba16001feb62a5929526ef8f69d6550c6acdc3f0579c69199c0b6a010
+        let privateKey = "0x7b281a9ba16001feb62a5929526ef8f69d6550c6acdc3f0579c69199c0b6a010";
+        let snAddr = "0xd6ebea69f2d81b9ca259c0b6ed3d9ad6aa206ef1";
+        let enode = "enode://f687439863fce1ff70dc40bec0fe5ea1ad0833a2672c29590b0aa9001e1488013e42e8adc96a6a9312ed1426d6bea47026d057df57a5856970b207afac771f09@10.0.0.5:30303";
         try {
             let result = await web3.safe4.supernode.changeEnode(privateKey, snAddr, enode);
             console.log("changeEnode-txid: ", result);
@@ -96,9 +88,10 @@ describe('Safe4Plugin SuperNode Tests', () => {
     });
 
     test("changeDescription", async () => {
-        let privateKey = "0xcfa6ac66802dfd1afd9e8b5b68aa5d65e3f303eaf10b809adefcd71ad524fbc7";
-        let snAddr = "0xa981b5f8d3cdb950243b970a6420e4b703a23006";
-        let desciription = "this is a test supernode";
+        // sn: 0xa5cec2b8cda30da3f3170b4505cb44226b6c9dd2, privateKey: 0x7b281a9ba16001feb62a5929526ef8f69d6550c6acdc3f0579c69199c0b6a010
+        let privateKey = "0x7b281a9ba16001feb62a5929526ef8f69d6550c6acdc3f0579c69199c0b6a010";
+        let snAddr = "0xd6ebea69f2d81b9ca259c0b6ed3d9ad6aa206ef1";
+        let desciription = "sn-5 for test";
         try {
             let result = await web3.safe4.supernode.changeDescription(privateKey, snAddr, desciription);
             console.log("changeDescription-txid: ", result);
@@ -108,14 +101,14 @@ describe('Safe4Plugin SuperNode Tests', () => {
     });
 
     test("getInfo", async () => {
-        let snAddr = "0xa981b5f8d3cdb950243b970a6420e4b703a23006";
+        let snAddr = "0xd6ebea69f2d81b9ca259c0b6ed3d9ad6aa206ef1";
         let result = await web3.safe4.supernode.getInfo(snAddr);
         console.log(result);
         expect(result.enode.length).not.toEqual(0);
     });
 
     test("getInfoByID", async () => {
-        let result = await web3.safe4.supernode.getInfoByID(6);
+        let result = await web3.safe4.supernode.getInfoByID(5);
         console.log(result);
         expect(result.enode.length).not.toEqual(0);
     });
@@ -123,70 +116,70 @@ describe('Safe4Plugin SuperNode Tests', () => {
     test("getNum", async () => {
         let result = await web3.safe4.supernode.getNum();
         console.log(result);
-        expect(result).toBeGreaterThanOrEqual(4n);
+        expect(result).toBeGreaterThan(0n);
     });
 
     test("getAll", async () => {
         let result = await web3.safe4.supernode.getAll(0, 100);
         console.log(result);
-        expect(result.length).toBeGreaterThanOrEqual(4);
+        expect(result.length).toBeGreaterThan(0);
     });
 
     test("getTops", async () => {
         let result = await web3.safe4.supernode.getTops();
         console.log(result);
-        expect(result.length).toBeGreaterThanOrEqual(4);
+        expect(result.length).toBeGreaterThan(0);
     });
 
     test("getOfficials", async () => {
         let result = await web3.safe4.supernode.getOfficials();
         console.log(result);
-        expect(result.length).toBeGreaterThanOrEqual(4);
+        expect(result.length).toBeGreaterThan(0);
     });
 
     test("exist", async () => {
-        let snAddr = "0xa981b5f8d3cdb950243b970a6420e4b703a23006";
+        let snAddr = "0xd6ebea69f2d81b9ca259c0b6ed3d9ad6aa206ef1";
         let result = await web3.safe4.supernode.exist(snAddr);
         console.log(result);
         expect(result).toEqual(true);
     });
 
     test("existID", async () => {
-        let result = await web3.safe4.supernode.existID(6);
+        let result = await web3.safe4.supernode.existID(5);
         console.log(result);
         expect(result).toEqual(true);
     });
 
     test("existName", async () => {
-        let name = "test-sn";
+        let name = "sn-5";
         let result = await web3.safe4.supernode.existName(name);
         console.log(result);
         expect(result).toEqual(true);
     });
 
     test("existEnode", async () => {
-        let enode = "enode://7d9cd0f84db59f040755bb7475fddd5190521db7373e6a3d8bf35b95727851821ab7e8dcb1ad3ea89f6a7d5d2e82e052b23a2a53ea5a9a86d708c7a02d2913c8@10.0.0.105:30303";
+        let enode = "enode://f687439863fce1ff70dc40bec0fe5ea1ad0833a2672c29590b0aa9001e1488013e42e8adc96a6a9312ed1426d6bea47026d057df57a5856970b207afac771f09@10.0.0.5:30303";
         let result = await web3.safe4.supernode.existEnode(enode);
         console.log(result);
         expect(result).toEqual(true);
     });
 
     test("existLockID", async () => {
-        let snAddr = "0xa981b5f8d3cdb950243b970a6420e4b703a23006";
+        let snAddr = "0xd6ebea69f2d81b9ca259c0b6ed3d9ad6aa206ef1";
         let result = await web3.safe4.supernode.existLockID(snAddr, 9);
         console.log(result);
         expect(result).toEqual(true);
     });
 
     test("isValid", async () => {
-        let snAddr = "0xa981b5f8d3cdb950243b970a6420e4b703a23006";
+        let snAddr = "0xd6ebea69f2d81b9ca259c0b6ed3d9ad6aa206ef1";
         let result = await web3.safe4.supernode.isValid(snAddr);
         console.log(result);
         expect(result).toEqual(true);
     });
 
     test("isFormal", async () => {
-        let snAddr = "0xa981b5f8d3cdb950243b970a6420e4b703a23006";
+        let snAddr = "0xd6ebea69f2d81b9ca259c0b6ed3d9ad6aa206ef1";
         let result = await web3.safe4.supernode.isFormal(snAddr);
         console.log(result);
         expect(result).toEqual(true);

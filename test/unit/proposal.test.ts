@@ -10,7 +10,8 @@ describe('Safe4Plugin Proposal Tests', () => {
     });
 
     test("create", async () => {
-        let privateKey = "0xcfa6ac66802dfd1afd9e8b5b68aa5d65e3f303eaf10b809adefcd71ad524fbc7";
+        // addr: 0xd52114c4071b5bfbd06a657a3db538bfd559a481, privateKey: 0xe171bcc091332eaa8fd76f529f880bd210b3187354706599b033df8155a94d84
+        let privateKey = "0xe171bcc091332eaa8fd76f529f880bd210b3187354706599b033df8155a94d84";
         try {
             let result = await web3.safe4.proposal.create(privateKey, "test_proposal", web3.utils.toWei('5', 'ether'), 5, 1702656000, 1702688400, "test proposal, 5 ether, pay 5 times, from 2023-12-16 00:00:00 to 2023-12-16 09:00:00");
             console.log("create-txid: ", result);
@@ -20,7 +21,10 @@ describe('Safe4Plugin Proposal Tests', () => {
     });
 
     test("vote", async () => {
-        let privateKey = "0xcfa6ac66802dfd1afd9e8b5b68aa5d65e3f303eaf10b809adefcd71ad524fbc7";
+        // sn: 0x918b8ed234e235a2ea5756fd5d9c80850ba3bb6d, privateKey: 0xfb5ae9ce44b96a5cb71f405806ec90493f18641776b44e9f267bed17c45a7874
+        // sn: 0xd57574369a6c90a5622f17fbed30c891b9d70c3b, privateKey: 0x5bd818c9dd4d05351e9c7ff830d9ee7d556181a6473c84363ff7edb1dfc7e34f
+        // sn: 0x556b5868919008607ef24f4eb2bde6feda3e42f2, privateKey: 0x73fc4be2c4a1d44f41c09ef138717a7994726461c9c256f25b36c3f3b570d9dd
+        let privateKey = "0xfb5ae9ce44b96a5cb71f405806ec90493f18641776b44e9f267bed17c45a7874";
         try {
             let result = await web3.safe4.proposal.vote(privateKey, 1, 1);
             console.log("vote-txid: ", result);
@@ -30,7 +34,7 @@ describe('Safe4Plugin Proposal Tests', () => {
     });
 
     test("changeTitle", async () => {
-        let privateKey = "0xcfa6ac66802dfd1afd9e8b5b68aa5d65e3f303eaf10b809adefcd71ad524fbc7";
+        let privateKey = "0xe171bcc091332eaa8fd76f529f880bd210b3187354706599b033df8155a94d84";
         try {
             let result = await web3.safe4.proposal.changeTitle(privateKey, 1, "update-test-proposal1");
             console.log("changeTitle-txid: ", result);
@@ -40,7 +44,7 @@ describe('Safe4Plugin Proposal Tests', () => {
     });
 
     test("changePayAmount", async () => {
-        let privateKey = "0xcfa6ac66802dfd1afd9e8b5b68aa5d65e3f303eaf10b809adefcd71ad524fbc7";
+        let privateKey = "0xe171bcc091332eaa8fd76f529f880bd210b3187354706599b033df8155a94d84";
         try {
             let result = await web3.safe4.proposal.changePayAmount(privateKey, 1, web3.utils.toWei('2', 'ether'));
             console.log("changePayAmount-txid: ", result);
@@ -50,7 +54,7 @@ describe('Safe4Plugin Proposal Tests', () => {
     });
 
     test("changePayTimes", async () => {
-        let privateKey = "0xcfa6ac66802dfd1afd9e8b5b68aa5d65e3f303eaf10b809adefcd71ad524fbc7";
+        let privateKey = "0xe171bcc091332eaa8fd76f529f880bd210b3187354706599b033df8155a94d84";
         try {
             let result = await web3.safe4.proposal.changePayTimes(privateKey, 1, 3);
             console.log("changePayTimes-txid: ", result);
@@ -60,7 +64,7 @@ describe('Safe4Plugin Proposal Tests', () => {
     });
 
     test("changeStartPayTime", async () => {
-        let privateKey = "0xcfa6ac66802dfd1afd9e8b5b68aa5d65e3f303eaf10b809adefcd71ad524fbc7";
+        let privateKey = "0xe171bcc091332eaa8fd76f529f880bd210b3187354706599b033df8155a94d84";
         try {
             let result = await web3.safe4.proposal.changeStartPayTime(privateKey, 1, 1702630800);
             console.log("changeStartPayTime-txid: ", result);
@@ -70,7 +74,7 @@ describe('Safe4Plugin Proposal Tests', () => {
     });
 
     test("changeEndPayTime", async () => {
-        let privateKey = "0xcfa6ac66802dfd1afd9e8b5b68aa5d65e3f303eaf10b809adefcd71ad524fbc7";
+        let privateKey = "0xe171bcc091332eaa8fd76f529f880bd210b3187354706599b033df8155a94d84";
         try {
             let result = await web3.safe4.proposal.changeEndPayTime(privateKey, 1, 1702634400);
             console.log("changeEndPayTime-txid: ", result);
@@ -80,7 +84,7 @@ describe('Safe4Plugin Proposal Tests', () => {
     });
 
     test("changeDescription", async () => {
-        let privateKey = "0xcfa6ac66802dfd1afd9e8b5b68aa5d65e3f303eaf10b809adefcd71ad524fbc7";
+        let privateKey = "0xe171bcc091332eaa8fd76f529f880bd210b3187354706599b033df8155a94d84";
         try {
             let result = await web3.safe4.proposal.changeDescription(privateKey, 1, "update-test-proposal1, 2 ether, pay 3 times, from 2023-12-15 17:00:00 to 2023-12-15 18:00:00");
             console.log("changeDescription-txid: ", result);
@@ -126,7 +130,7 @@ describe('Safe4Plugin Proposal Tests', () => {
     });
 
     test("getMines", async () => {
-        let privateKey = "0xcfa6ac66802dfd1afd9e8b5b68aa5d65e3f303eaf10b809adefcd71ad524fbc7";
+        let privateKey = "0xe171bcc091332eaa8fd76f529f880bd210b3187354706599b033df8155a94d84";
         let result = await web3.safe4.proposal.getMines(privateKey, 0, 100);
         console.log(result);
         expect(result.length).toBeGreaterThanOrEqual(1);
